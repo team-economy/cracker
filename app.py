@@ -5,7 +5,6 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
-from oauth2client.contrib.flask_util import UserOAuth2
 import requests
 
 app = Flask(__name__)
@@ -18,8 +17,6 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'Craker'
 
-client = MongoClient('localhost', 27017)
-db = client.craker
 
 @app.route('/')
 def home():
@@ -44,6 +41,7 @@ def login():
 def sign_in():
     user_mail_receive = request.form['user_mail_give']
     user_pw_receive = request.form['user_pw_give']
+
     pw_hash = hashlib.sha256(user_pw_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'user_mail': user_mail_receive, 'user_pw': pw_hash})
 
@@ -52,7 +50,7 @@ def sign_in():
          'id': user_mail_receive,
          'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256') #.decode('utf-8')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
 
         return jsonify({'result': 'success', 'token': token})
     else:
@@ -126,10 +124,6 @@ def get_place():
     matjip_list = list(db.matjip.find({}, {'_id': False}))
 
     return jsonify({'result': 'success', 'matjip_list': matjip_list})
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
 @app.route('/maps', methods=["GET"])
 def get_matjip():
