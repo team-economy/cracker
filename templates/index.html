@@ -153,27 +153,20 @@
                         for (let i = 0; i < matjips.length; i++) {
                             let matjip = matjips[i]
                             console.log(matjip)
-                            make_card(i, matjip);
-                            let marker = make_marker(matjip);
-                            add_info(i, marker, matjip);
+                            make_marker(matjip);
                         }
                     }
-                }
-            )
-            let like = response['likestatus']
-            if (like == 'true') {
-            } else {
-            }
+                })
         }
 
         function make_marker(matjip) {
             let marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(matjip["mapy"], matjip["mapx"]),
+                position: new naver.maps.LatLng(matjip["y"], matjip["x"]),
                 map: map
             });
             markers.push(marker);
-            return marker
         }
+
     </script>
 </head>
 

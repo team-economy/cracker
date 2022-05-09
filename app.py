@@ -15,7 +15,7 @@ db = client.cracker
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
-SECRET_KEY = 'Craker'
+SECRET_KEY = 'Cracker'
 
 
 @app.route('/')
@@ -30,6 +30,11 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
+@app.route('/maps', methods=["GET"])
+def get_matjip():
+    matjip_list = list(db.matjip.find({}, {"_id": False}))
+    # 맛집 목록을 반환하는 API
+    return jsonify({'result': 'success', 'matjip_list': matjip_list})
 
 @app.route('/login')
 def login():
@@ -124,11 +129,6 @@ def get_place():
     matjip_list = list(db.matjip.find({}, {'_id': False}))
 
     return jsonify({'result': 'success', 'matjip_list': matjip_list})
-
-@app.route('/maps', methods=["GET"])
-def get_matjip():
-
-    return jsonify({'result': 'success'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
