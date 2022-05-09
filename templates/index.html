@@ -2,74 +2,124 @@
 <html lang="en">
 <head>
     <!-- Webpage Title -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>cracker | Share crumbs of every moment</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <meta property="og:title" content="ESC - Every Schedule Connector"/>
-    <meta property="og:description" content="Share your schedule and get connected"/>
-    <meta property="og:image" content="{{ url_for('static', filename='icon.png') }}"/>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- BootStrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
     <!-- Font Awesome CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
-    <!-- import css -->
-    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Raleway&display=swap" rel="stylesheet">
+
+    <!-- Import CSS -->
+    {#    <link href="{{ url_for('static', filename='place.css') }}" rel="stylesheet">#}
+
     <!-- Naver Map -->
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gpyucdzjhf&submodules=geocoder"></script>
+
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+    <!-- Import JS -->
+    <script src="{{ url_for('static', filename='place.js') }}"></script>
+
     <style>
         body {
-            background-color: #F6F6F6;
+            background-color: lemonchiffon;
             min-height: 100vh;
+            padding-top: 3.25rem;
         }
 
-        .container {
+        {#<!-- Title and Subtitle -->#}
+        .title {
+            font-family: 'Koulen', cursive;
+            font-size: xxx-large;
+            color: goldenrod !important;
+        }
+
+        .subtitle {
+            font-family: 'Raleway', sans-serif;
+        }
+
+        {# map and place list #}
+        .map-section {
             width: 100%;
-            height: 100%;
-        }
-
-        .navbar-item {
-            width: 100px;
-            height: 100px;
-            margin-left: 100px;
+            height: 600px;
+            max-width: 1200px;
+            margin: 80px auto 20px auto;
         }
 
         #map {
-            width: 65%;
             float: left;
-            height: 50vh;
-            margin: 20px auto 20px auto;
+            width: 60%;
+            height: 90%;
+
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            z-index: 0;
         }
 
-        .button {
-            width: 20%;
-            float: right;
-            margin: 10px 150px 20px auto;
+        .media-content {
+            margin-bottom: 20px;
         }
 
-        .box {
+        .place-input {
+            width: 80%;
+        }
+
+        .map-placelist {
+            float: left;
             width: 30%;
-            float: right;
-            height: 40vh;
-            margin: 20px 50px 20px auto;
+
+            margin-left: 30px;
         }
 
-        .section {
-            float: bottom;
+        .matjip-list {
+            height: 500px;
+            overflow: auto;
+        }
+
+        {# modal #}
+        .modal-section {
+            z-index: 10000000;
+        }
+
+        .modal-content {
+            width: 600px;
+            max-width: 80%;
+        }
+
+        .modal-list {
+            height: 300px;
+            overflow: auto;
+        }
+
+        .button.save-button {
+            background-color: #345ee8;
+            border-color: transparent;
+            color: #fff !important;
+        }
+
+        .button.cancel-button {
+            background-color: transparent;
+            border-color: #e8344e;
+            color: #e8344e !important;
         }
     </style>
 
@@ -128,65 +178,64 @@
 </head>
 
 <body>
-<div class="container">
-    <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-                <img src="{{ url_for('static', filename='icon.png') }}">
-                <strong class="is-sparta"
-                        style="font-family: 'Stylish', sans-serif;font-size: larger;"></strong>
-            </a>
-        </div>
-    </nav>
-    <section class="hero is-white">
-        <div class="hero-body" style="padding-bottom:1rem;margin:auto;min-width: 400px">
-            <article class="media">
-                <figure class="media-left" style="align-self: center">
-                    <a class="image is-96x96" href="#">
-{#                        <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">#}
-                    </a>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-{#                            <strong>{{ user_info.profile_name }}</strong> <small>@{{ user_info.email }}</small>#}
-                            <br>
-{#                            {{ user_info.profile_info }}#}
-                        </p>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <section>
-        <div id="map"></div>
-        <div>
-            <a class="button is-dark">Scatter Crumbs..</a>
+<section class="hero is-white">
+    <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
+        <h1 class="title">CRACKER</h1>
+        <h3 class="subtitle">Share crumbs of every moment</h3>
+    </div>
+</section>
+<section class="modal-section">
+    <div class="modal" id="modal-post">
+        <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
+        <div class="modal-content">
             <div class="box">
                 <article class="media">
-                    <div class="media-left">
-                        <figure class="image is-64x64">
-                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-                        </figure>
-                    </div>
                     <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <strong>John Smith</strong> <small>@johnsmith</small>
-                                <br>
-                                johnsmith@gmail.com
-                            </p>
-                        </div>
+                        <div class="field modal-list" id="place_list"></div>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+
+                            </div>
+                            <div class="level-right">
+                                <div class="level-item">
+                                    <a class="button save-button" onclick="save_place()">등록하기</a>
+                                </div>
+                                <div class="level-item">
+                                    <a class="button cancel-button"
+                                       onclick='$("#modal-post").removeClass("is-active")'>취소</a>
+                                </div>
+                            </div>
+                        </nav>
                     </div>
                 </article>
             </div>
         </div>
-    </section>
-
-    <div>
-        <p>Not My Money, but My Sparta</p>
+        <button class="modal-close is-large" aria-label="close"
+                onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
-</div>
+</section>
+<section class="map-section">
+    <div id="map"></div>
+    <div class="map-placelist">
+        <div class="media-content">
+            <div class="field">
+                <p class="control">
+                    <input id="input-post" class="input is-rounded place-input" placeholder="맛집 이름을 입력하세요">
+                    <button type="button" class="btn btn-primary" onclick='get_address();'>찾기
+                    </button>
+                </p>
+            </div>
+        </div>
+        <div class="matjip-list" id="matjip-box">
+            <div class="card" id="card-0">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="#" class="matjip-title">혼가츠</a></h5>
+                    <p class="card-text">서울 마포구 와우산로21길 36-6 (서교동)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 </body>
 </html>
