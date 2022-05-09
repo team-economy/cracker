@@ -1,10 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Webpage Title -->
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>cracker | Share crumbs of every moment</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <meta property="og:title" content="ESC - Every Schedule Connector"/>
+    <meta property="og:description" content="Share your schedule and get connected"/>
+    <meta property="og:image" content="{{ url_for('static', filename='icon.png') }}"/>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
+    <!-- import css -->
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+    <!-- Naver Map -->
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gpyucdzjhf&submodules=geocoder"></script>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+    <style>
+        body {
+            background-color: #F6F6F6;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .navbar-item {
+            width: 100px;
+            height: 100px;
+            margin-left: 100px;
+        }
+
+        #map {
+            width: 65%;
+            float: left;
+            height: 50vh;
+            margin: 20px auto 20px auto;
+        }
+
+        .button {
+            width: 20%;
+            float: right;
+            margin: 10px 150px 20px auto;
+        }
+
+        .box {
+            width: 30%;
+            float: right;
+            height: 40vh;
+            margin: 20px 50px 20px auto;
+        }
+
+        .section {
+            float: bottom;
+        }
+    </style>
+
+    <script>
+        let y_cen = 37.4981125   // lat
+        let x_cen = 127.0379399  // long
+        let map;
+        let markers = [];
+        let infowindows = [];
+        $(document).ready(function () {
+            map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(y_cen, x_cen),
+                zoom: 12,
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: naver.maps.ZoomControlStyle.SMALL,
+                    position: naver.maps.Position.TOP_RIGHT
+                }
+            });
+            get_posts()
+        })
+
+        function get_posts() {
+            $('#posts-box').empty();
+            $.ajax({
+                    type: "GET",
+                    url: '/maps',
+                    data: {},
+                    success: function (response) {
+                        let matjips = response["matjip_list"]
+                        for (let i = 0; i < matjips.length; i++) {
+                            let matjip = matjips[i]
+                            console.log(matjip)
+                            make_card(i, matjip);
+                            let marker = make_marker(matjip);
+                            add_info(i, marker, matjip);
+                        }
+                    }
+                }
+            )
+            let like = response['likestatus']
+            if (like == 'true') {
+            } else {
+            }
+        }
+
+        function make_marker(matjip) {
+            let marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(matjip["mapy"], matjip["mapx"]),
+                map: map
+            });
+            markers.push(marker);
+            return marker
+        }
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="{{ url_for('static', filename='icon.png') }}">
+                <strong class="is-sparta"
+                        style="font-family: 'Stylish', sans-serif;font-size: larger;"></strong>
+            </a>
+        </div>
+    </nav>
+    <section class="hero is-white">
+        <div class="hero-body" style="padding-bottom:1rem;margin:auto;min-width: 400px">
+            <article class="media">
+                <figure class="media-left" style="align-self: center">
+                    <a class="image is-96x96" href="#">
+{#                        <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">#}
+                    </a>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+{#                            <strong>{{ user_info.profile_name }}</strong> <small>@{{ user_info.email }}</small>#}
+                            <br>
+{#                            {{ user_info.profile_info }}#}
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section>
+        <div id="map"></div>
+        <div>
+            <a class="button is-dark">Scatter Crumbs..</a>
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>John Smith</strong> <small>@johnsmith</small>
+                                <br>
+                                johnsmith@gmail.com
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <div>
+        <p>Not My Money, but My Sparta</p>
+    </div>
+</div>
 </body>
 </html>
