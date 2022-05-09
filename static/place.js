@@ -23,7 +23,7 @@ function get_address() {
                         let place = places[i]
 
                         let html_temp = `<div class="form-check">
-                                            <input class="form-check-input" type="radio" name="place" id="place${i}" value="${place['place_name']},${place['address_name']},${place['road_address_name']}">
+                                            <input class="form-check-input" type="radio" name="place" id="place${i}" value="${place['place_name']},${place['address_name']},${place['road_address_name']},${place['x']},${place['y']}">
                                             <label class="form-check-label" for="${place['place_name']}" id="label">
                                                 <p id="place_name"><b>${place['place_name']}</b></a>
                                                 <p>${place['category_name']}</p>
@@ -43,6 +43,8 @@ function save_place() {
     let place = radio_button.split(',')[0];
     let addr = radio_button.split(',')[1];
     let addr_road = radio_button.split(',')[2];
+    let x = radio_button.split(',')[3];
+    let y = radio_button.split(',')[4];
 
     console.log(place)
     console.log(addr)
@@ -54,7 +56,9 @@ function save_place() {
         data: {
             place_give: place,
             addr_give: addr,
-            addr_road_give: addr_road
+            addr_road_give: addr_road,
+            x_give:x,
+            y_give:y
         },
         success: function (response) {
             $("#modal-post").removeClass("is-active")
