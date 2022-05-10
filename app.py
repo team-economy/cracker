@@ -33,7 +33,7 @@ def home():
 @app.route('/maps', methods=["GET"])
 def get_matjip():
     matjip_list = list(db.matjip.find({}, {"_id": False}))
-    # 맛집 목록을 반환하는 API
+
     return jsonify({'result': 'success', 'matjip_list': matjip_list})
 
 @app.route('/login')
@@ -112,12 +112,16 @@ def save_place():
     place_receive = request.form["place_give"]
     addr_receive = request.form["addr_give"]
     addr_road_receive = request.form["addr_road_give"]
+    x_receive = request.form["x_give"]
+    y_receive = request.form["y_give"]
     doc = {
         "matjip_name":place_receive,
         "matjip_address":addr_receive,
         "matjip_road_address":addr_road_receive,
         "user_name":'cheoljin',
-        "profile_name":'cheoljin'
+        "profile_name":'cheoljin',
+        "x":x_receive,
+        "y":y_receive
     }
     db.matjip.insert_one(doc)
     return({"result":"success"})
