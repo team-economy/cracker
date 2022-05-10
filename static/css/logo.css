@@ -1,0 +1,17 @@
+body {
+    background-color: lemonchiffon;
+    min-height: 100vh;
+    padding-top: 3.25rem;
+}
+
+/* Title and Subtitle */
+
+.title {
+    font-family: 'Koulen', cursive;
+    font-size: xxx-large;
+    color: goldenrod !important;
+}
+
+.subtitle {
+    font-family: 'Raleway', sans-serif;
+}

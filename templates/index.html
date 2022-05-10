@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- Webpage Title -->
-    <title>cracker | Share crumbs of every moment</title>
+    <title>CRACKER | Share crumbs of every moment</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -23,9 +23,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Raleway&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
 
     <!-- Import CSS -->
-    {#    <link href="{{ url_for('static', filename='place.css') }}" rel="stylesheet">#}
+    <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/map_place.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/index_user_info.css') }}" rel="stylesheet">
 
     <!-- Naver Map -->
     <script type="text/javascript"
@@ -36,141 +41,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <!-- Import JS -->
-    <script src="{{ url_for('static', filename='place.js') }}"></script>
-
-    <style>
-        body {
-            background-color: lemonchiffon;
-            min-height: 100vh;
-            padding-top: 3.25rem;
-        }
-
-        {#<!-- Title and Subtitle -->#}
-        .title {
-            font-family: 'Koulen', cursive;
-            font-size: xxx-large;
-            color: goldenrod !important;
-        }
-
-        .subtitle {
-            font-family: 'Raleway', sans-serif;
-        }
-
-        {# map and place list #}
-        .map-section {
-            width: 100%;
-            height: 600px;
-            max-width: 1200px;
-            margin: 80px auto 20px auto;
-        }
-
-        #map {
-            float: left;
-            width: 60%;
-            height: 90%;
-
-            margin-top: 20px;
-            margin-bottom: 20px;
-
-            z-index: 0;
-        }
-
-        .media-content {
-            margin-bottom: 20px;
-        }
-
-        .place-input {
-            width: 80%;
-        }
-
-        .map-placelist {
-            float: left;
-            width: 30%;
-
-            margin-left: 30px;
-        }
-
-        .matjip-list {
-            height: 500px;
-            overflow: auto;
-        }
-
-        {# modal #}
-        .modal-section {
-            z-index: 10000000;
-        }
-
-        .modal-content {
-            width: 600px;
-            max-width: 80%;
-        }
-
-        .modal-list {
-            height: 300px;
-            overflow: auto;
-        }
-
-        .button.save-button {
-            background-color: #345ee8;
-            border-color: transparent;
-            color: #fff !important;
-        }
-
-        .button.cancel-button {
-            background-color: transparent;
-            border-color: #e8344e;
-            color: #e8344e !important;
-        }
-    </style>
-
-    <script>
-        let y_cen = 37.4981125   // lat
-        let x_cen = 127.0379399  // long
-        let map;
-        let markers = [];
-        let infowindows = [];
-        $(document).ready(function () {
-            map = new naver.maps.Map('map', {
-                center: new naver.maps.LatLng(y_cen, x_cen),
-                zoom: 12,
-                zoomControl: true,
-                zoomControlOptions: {
-                    style: naver.maps.ZoomControlStyle.SMALL,
-                    position: naver.maps.Position.TOP_RIGHT
-                }
-            });
-            get_posts()
-        })
-
-        function get_posts() {
-            $('#posts-box').empty();
-            $.ajax({
-                    type: "GET",
-                    url: '/maps',
-                    data: {},
-                    success: function (response) {
-                        let matjips = response["matjip_list"]
-                        for (let i = 0; i < matjips.length; i++) {
-                            let matjip = matjips[i]
-                            console.log(matjip)
-                            make_marker(matjip);
-                        }
-                    }
-                })
-        }
-
-        function make_marker(matjip) {
-            let marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(matjip["y"], matjip["x"]),
-                map: map
-            });
-            markers.push(marker);
-        }
-
-    </script>
+    <script src="{{ url_for('static', filename='js/place.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
 </head>
 
+
 <body>
+<div class="user-info">
+    <p>
+        <span class="user-name"><a>{{ user_info.user_name }}</a>님 안녕하세요? &nbsp&nbsp</span>
+        <button class="button is-dark is-rounded" onclick="sign_out()">Crack OUT</button>
+    </p>
+</div>
 <section class="hero is-white">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
         <h1 class="title">CRACKER</h1>
@@ -214,7 +97,7 @@
             <div class="field">
                 <p class="control">
                     <input id="input-post" class="input is-rounded place-input" placeholder="맛집 이름을 입력하세요">
-                    <button type="button" class="btn btn-primary" onclick='get_address();'>찾기
+                    <button type="button" class="btn btn-primary find-btn" onclick='get_address();'>찾기
                     </button>
                 </p>
             </div>

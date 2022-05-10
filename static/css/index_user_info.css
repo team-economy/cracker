@@ -1,0 +1,13 @@
+    .user-info {
+        text-align: right;
+        margin: auto;
+        width: 75%;
+        max-width: 1500px;
+        height: 60px;
+    }
+
+    .user-name {
+        font-family: 'Dongle', sans-serif;
+        font-size: 35px;
+        vertical-align: middle;
+    }
