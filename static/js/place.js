@@ -62,9 +62,14 @@ function save_place() {
             phone_give: phone
         },
         success: function (response) {
-            alert(response["msg"])
-            $("#modal-post").removeClass("is-active")
-            window.location.reload()
+            if (response["msg"] == "저장 완료!!") {
+                alert(response["msg"])
+                $("#modal-post").removeClass("is-active")
+                window.location.reload()
+            } else {
+                alert(response["msg"])
+                $("#modal-post").removeClass("is-active")
+            }
         }
 
     })
@@ -75,14 +80,13 @@ function delete_place(addr) {
         type: "DELETE",
         url: `/place_delete`,
         data: {
-            addr_give:addr
+            addr_give: addr
         },
         success: function (response) {
-            if(response["msg"]=="삭제 완료!!") {
+            if (response["msg"] == "삭제 완료!!") {
                 alert(response["msg"])
                 window.location.reload()
-            }
-            else{
+            } else {
                 alert(response["msg"])
             }
         }
