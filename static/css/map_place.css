@@ -1,5 +1,8 @@
+h5 {
+    font-size: 15px;
+}
 
-    /* map and place list */
+/* map and place list */
 
 .map-section {
     width: 100%;
@@ -42,10 +45,11 @@
 .matjip-list {
     height: 500px;
     overflow: auto;
+    position: relative;
 }
 
 
-    /* modal */
+/* modal */
 
 .modal-section {
     z-index: 10000000;
@@ -71,4 +75,17 @@
     background-color: transparent;
     border-color: #e8344e;
     color: #e8344e !important;
+}
+
+.iw-inner {
+    padding: 10px;
+    font-size: smaller;
+}
+
+.place-phone {
+    color: blue;
+}
+
+.community-delete{
+    text-align: right;
 }

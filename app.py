@@ -21,7 +21,6 @@ SECRET_KEY = 'Cracker'
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
-    print(token_receive)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"user_mail": payload["id"]})
@@ -30,12 +29,6 @@ def home():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-@app.route('/maps', methods=["GET"])
-def get_matjip():
-    matjip_list = list(db.matjip.find({}, {"_id": False}))
-
-    return jsonify({'result': 'success', 'matjip_list': matjip_list})
 
 @app.route('/login')
 def login():
@@ -95,13 +88,11 @@ def get_address():
         return({"result":"success", "msg":"input empty"})
     else:
         searching = place_receive
-        print (place_receive)
         url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query={}'.format(searching)
         headers = {
             "Authorization": "KakaoAK b2cd5fe8152984068e62cf5b85fbb75a"
         }
         places = requests.get(url, headers = headers).json()['documents']
-        print(places)
         if (places == []):
             return({"result":"success", "msg":"no result"})
         else:
@@ -110,30 +101,64 @@ def get_address():
 # 선택한 맛집 DB에 저장
 @app.route("/save_place", methods=['POST'])
 def save_place():
-    place_receive = request.form["place_give"]
-    addr_receive = request.form["addr_give"]
-    addr_road_receive = request.form["addr_road_give"]
-    x_receive = request.form["x_give"]
-    y_receive = request.form["y_give"]
-    doc = {
-        "matjip_name":place_receive,
-        "matjip_address":addr_receive,
-        "matjip_road_address":addr_road_receive,
-        "user_name":'cheoljin',
-        "profile_name":'cheoljin',
-        "x":x_receive,
-        "y":y_receive
-    }
-    db.matjip.insert_one(doc)
-    return({"result":"success"})
+    token_receive = request.cookies.get('mytoken')
+    try:
+        # user 정보
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"user_mail": payload["id"]})
+
+        # 위치 정보
+        place_receive = request.form["place_give"]
+        addr_receive = request.form["addr_give"]
+        addr_road_receive = request.form["addr_road_give"]
+        x_receive = request.form["x_give"]
+        y_receive = request.form["y_give"]
+        phone_receive = request.form["phone_give"]
+
+        saved_place = db.matjip.find_one({'matjip_address':addr_receive})
+
+        if (saved_place is None):
+            doc = {
+                "matjip_name":place_receive,
+                "matjip_address":addr_receive,
+                "matjip_road_address":addr_road_receive,
+                "user_mail": user_info["user_mail"],
+                "user_name": user_info["user_name"],
+                "x":x_receive,
+                "y":y_receive,
+                "phone":phone_receive
+            }
+            db.matjip.insert_one(doc)
+            return({"result":"success","msg":"저장 완료!!"})
+        else:
+            return ({"result": "success", "msg": "이미 저장 되어있습니다."})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 # 맛집 DB에서 값을 가져와서 리스트 출력
 @app.route('/get_place', methods=["GET"])
 def get_place():
-
     matjip_list = list(db.matjip.find({}, {'_id': False}))
-
     return jsonify({'result': 'success', 'matjip_list': matjip_list})
+
+@app.route("/place_delete", methods=['DELETE'])
+def delete_place():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        # user 정보
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"user_mail": payload["id"]})
+
+        addr_receive = request.form['addr_give']
+
+        saved_place = db.matjip.find_one({'matjip_address': addr_receive})
+        if (user_info["user_mail"]==saved_place["user_mail"] and user_info["user_name"]==saved_place["user_name"]):
+            db.matjip.delete_one({'matjip_address': addr_receive})
+            return jsonify({'result': 'success', 'msg':'삭제 완료!!'})
+        else:
+            return jsonify({'result': 'success', 'msg': '계정 정보를 확인하세요.'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
