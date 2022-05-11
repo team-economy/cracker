@@ -70,8 +70,14 @@ def sign_up():
     return jsonify({'result': 'success'})
 
 
-@bp.route('/sign_up/check_dup', methods=['POST'])
-def check_dup():
+@bp.route('/sign_up/check_email_dup', methods=['POST'])
+def check_email_dup():
     user_mail_receive = request.form['user_mail_give']
     exists = bool(db.users.find_one({"user_mail": user_mail_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
+
+@bp.route('/sign_up/check_user_dup', methods=['POST'])
+def check_user_dup():
+    user_name_receive = request.form['user_name_give']
+    exists = bool(db.users.find_one({"user_name": user_name_receive}))
     return jsonify({'result': 'success', 'exists': exists})
