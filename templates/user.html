@@ -1,139 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Webpage Title -->
     <title>cracker | Share crumbs of every moment</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-    <meta property="og:title" content="ESC - Every Schedule Connector"/>
-    <meta property="og:description" content="Share your schedule and get connected"/>
-    <meta property="og:image" content="{{ url_for('static', filename='icon.png') }}"/>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- BootStrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
     <!-- Font Awesome CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
-    <!-- import css -->
-    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Raleway&display=swap" rel="stylesheet">
+
+    <!-- Import CSS -->
+    <link href="{{ url_for('static', filename='place.css') }}" rel="stylesheet">
+
+    <!-- Naver Map -->
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gpyucdzjhf&submodules=geocoder"></script>
+
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+    <!-- Import JS -->
+    <script src="{{ url_for('static', filename='place.js') }}"></script>
+
+    <style>
+        body {
+            background-color: lemonchiffon;
+            min-height: 100vh;
+            padding-top: 3.25rem;
+        }
+
+        {#<!-- Title and Subtitle -->#}
+        .title {
+            font-family: 'Koulen', cursive;
+            font-size: xxx-large;
+            color: goldenrod !important;
+        }
+
+        .subtitle {
+            font-family: 'Raleway', sans-serif;
+        }
+
+        {# map and place list #}
+        .map-section {
+            width: 100%;
+            height: 600px;
+            max-width: 1200px;
+            margin: 80px auto 20px auto;
+        }
+
+        #map {
+            float: left;
+            width: 60%;
+            height: 90%;
+
+            margin-top: 20px;
+            margin-bottom: 20px;
+
+            z-index: 0;
+        }
+
+        .media-content {
+            margin-bottom: 20px;
+        }
+
+        .place-input {
+            width: 80%;
+        }
+
+        .map-placelist {
+            float: left;
+            width: 30%;
+
+            margin-left: 30px;
+        }
+
+        .matjip-list {
+            height: 500px;
+            overflow: auto;
+        }
+
+        {# modal #}
+        .modal-section {
+            z-index: 10000000;
+        }
+
+        .modal-content {
+            width: 600px;
+            max-width: 80%;
+        }
+
+        .modal-list {
+            height: 300px;
+            overflow: auto;
+        }
+
+        .button.save-button {
+            background-color: #345ee8;
+            border-color: transparent;
+            color: #fff !important;
+        }
+
+        .button.cancel-button {
+            background-color: transparent;
+            border-color: #e8344e;
+            color: #e8344e !important;
+        }
+    </style>
+
+    <script>
+        let y_cen = 37.4981125   // lat
+        let x_cen = 127.0379399  // long
+        let map;
+        let markers = [];
+        let infowindows = [];
+        $(document).ready(function () {
+            map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(y_cen, x_cen),
+                zoom: 12,
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: naver.maps.ZoomControlStyle.SMALL,
+                    position: naver.maps.Position.TOP_RIGHT
+                }
+            });
+            get_posts()
+        })
+
+        function get_posts() {
+            $('#posts-box').empty();
+            $.ajax({
+                type: "GET",
+                url: '/maps',
+                data: {},
+                success: function (response) {
+                    let matjips = response["matjip_list"]
+                    for (let i = 0; i < matjips.length; i++) {
+                        let matjip = matjips[i]
+                        console.log(matjip)
+                        make_marker(matjip);
+                    }
+                }
+            })
+        }
+
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('정상적으로 로그아웃 되었습니다.')
+            window.location.href = "/login"
+        }
+
+        function update_profile() {
+            let name = $('#input-name').val()
+            let file = $('#input-pic')[0].files[0]
+            let about = $("#textarea-about").val()
+            let form_data = new FormData()
+            form_data.append("file_give", file)
+            form_data.append("name_give", name)
+            form_data.append("about_give", about)
+            console.log(name, file, about, form_data)
+            $.ajax({
+                type: "POST",
+                url: "/update_profile",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert(response["msg"])
+                        window.location.reload()
+
+                    }
+                }
+            });
+        }
+
+        function update_marker() {
+            let marker = $('#input-marker')[0].files[0]
+            let form_marker_data = new FormData()
+            form_marker_data.append("marker_give", marker)
+            $.ajax({
+                type: "POST",
+                url: "/update_marker",
+                data: form_marker_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert(response["msg"])
+                        window.location.reload()
+                    }
+                }
+            });
+        }
+
+    </script>
+
+
 </head>
 
-<body>
+
+<body class="has-navbar-fixed-top">
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="{{ url_for('static', filename='icon.png') }}">
+            <img src="{{ url_for('static', filename='cracker_2.png') }}">
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;"></strong>
         </a>
     </div>
 </nav>
-<nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-            <img src="{{ url_for('static', filename='icon.png') }}">
-            <strong class="is-sparta"
-                    style="font-family: 'Stylish', sans-serif;font-size: larger;"></strong>
-        </a>
-    </div>
-</nav>
+
+{#프로필 영역#}
 <section class="hero is-white">
     <div class="hero-body" style="padding-bottom:1rem;margin:auto;min-width: 400px">
         <article class="media">
+
             <figure class="media-left" style="align-self: center">
                 <a class="image is-96x96" href="#">
-                    <img class="is-rounded" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
+                    <img class="is-rounded" src="{{ url_for('static', filename=user_info.user_pic_real) }}">
                 </a>
             </figure>
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>{{ user_info.profile_name }}</strong> <small>@{{ user_info.email }}</small>
+                        <strong>{{ user_info.user_name }}</strong> <small>{{ user_info.user_mail }}</small>
                         <br>
-                        {{ user_info.profile_info }}
+                        {{ user_info.user_info }}
                     </p>
                 </div>
+
             </div>
         </article>
+    </div>
+    {#수정 및 로그아웃 버튼#}
+    {% if status %}
+        <nav id="btns-me" class="level is-mobile" style="margin-top:2rem">
+            <a class="button level-item has-text-centered is-sparta" aria-label="edit"
+               onclick='$("#modal-edit").addClass("is-active")'>
+                Edit Profile&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-pencil"
+                                                                             aria-hidden="true"></i></span>
+            </a>
 
+            <a class="button level-item has-text-centered is-sparta" aria-label="edit_marker"
+               onclick='$("#modal-edit_marker").addClass("is-active")'>
+                Edit Marker <span class="icon is-small"><i class="fa fa-pencil"
+                                                                             aria-hidden="true"></i></span>
+            </a>
+
+            <a class="button level-item has-text-centered is-sparta is-outlined" aria-label="logout"
+               onclick="sign_out()">
+                Log out&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-sign-out"
+                                                                        aria-hidden="true"></i></span>
+            </a>
+        </nav>
+    {% endif %}
+    {#프로필 수정 모달#}
+    <div class="modal" id="modal-edit">
+        <div class="modal-background" onclick='$("#modal-edit").removeClass("is-active")'></div>
+        <div class="modal-content">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content">
+                        <div class="field">
+                            <label class="label" for="input-name">별명</label>
+                            <p class="control">
+                                <input id="input-name" class="input"
+                                       placeholder="별명" value="{{ user_info.user_name }}">
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="input-pic">프로필 사진</label>
+                            <div class="control is-expanded">
+                                <div class="file has-name">
+                                    <label class="file-label" style="width:100%">
+                                        <input id="input-pic" class="file-input" type="file" name="resume">
+                                        <span class="file-cta">
+                                        <span class="file-icon"><i class="fa fa-upload"></i></span>
+                                        <span class="file-label">파일 선택</span>
+                                    </span>
+                                        <span id="file-name" class="file-name"
+                                              style="width:100%;max-width:100%">{{ user_info.user_pic }}</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label" for="textarea-about">자기소개</label>
+                            <p class="control">
+                        <textarea id="textarea-about" class="textarea"
+                                  placeholder="자기소개하기">{{ user_info.user_info }}</textarea>
+                            </p>
+                        </div>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+
+                            </div>
+                            <div class="level-right">
+                                <div class="level-item">
+                                    <a class="button is-sparta" onclick="update_profile()">업데이트</a>
+                                </div>
+                                <div class="level-item">
+                                    <a class="button is-sparta is-outlined"
+                                       onclick='$("#modal-edit").removeClass("is-active")'>취소</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"
+                onclick='$("#modal-edit").removeClass("is-active")'></button>
+    </div>
+
+    {#마커 수정 모달#}
+    <div class="modal" id="modal-edit_marker">
+        <div class="modal-background" onclick='$("#modal-edit_marker").removeClass("is-active")'></div>
+        <div class="modal-content">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content">
+                        <div class="field">
+                            <label class="label" for="input-marker">마커 이미지</label>
+                            <div class="control is-expanded">
+                                <div class="file has-name">
+                                    <label class="file-label" style="width:100%">
+                                        <input id="input-marker" class="file-input" type="file" name="resume">
+                                        <span class="file-cta">
+                                        <span class="file-icon"><i class="fa fa-upload"></i></span>
+                                        <span class="file-label">파일 선택</span>
+                                        </span>
+                                        <span id="file-name" class="file-name"
+                                              style="width:100%;max-width:100%">{{ user_info.marker_pic }}</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+
+                            </div>
+                            <div class="level-right">
+                                <div class="level-item">
+                                    <a class="button is-sparta" onclick="update_marker()">업데이트</a>
+                                </div>
+                                <div class="level-item">
+                                    <a class="button is-sparta is-outlined"
+                                       onclick='$("#modal-edit_marker").removeClass("is-active")'>취소</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"
+                onclick='$("#modal-edit").removeClass("is-active")'></button>
     </div>
 </section>
-{% if status %}
-<nav id="btns-me" class="level is-mobile" style="margin-top:2rem">
-    <a class="button level-item has-text-centered is-sparta" aria-label="edit"
-       onclick='$("#modal-edit").addClass("is-active")'>
-        Edit Profile&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-    </a>
-</nav>
-<div class="modal" id="modal-edit">
-    <div class="modal-background" onclick='$("#modal-edit").removeClass("is-active")'></div>
-    <div class="modal-content">
-        <div class="box">
-            <article class="media">
-                <div class="media-content">
-                    <div class="field">
-                        <label class="label" for="input-name">Name</label>
 
-                        <p class="control">
 
-                            <input id="input-name" class="input"
-                                   placeholder="Yuni" value="{{ user_info.profile_name }}">
-                        </p>
-                    </div>
-                    <div class="field">
-                        <label class="label" for="input-pic">Profile picture</label>
+{#사용자 맛집 즐겨찾기#}
+<section class="modal-section">
+    <div class="modal" id="modal-post">
+        <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
+        <div class="modal-content">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content">
+                        <div class="field modal-list" id="place_list"></div>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
 
-                        <div class="control is-expanded">
-                            <div class="file has-name">
-                                <label class="file-label" style="width:100%">
-                                    <input id="input-pic" class="file-input" type="file"
-                                           name="resume">
-                                    <span class="file-cta"><span class="file-icon"><i
-                                            class="fa fa-upload"></i></span>
-                                                    <span class="file-label">Choose file</span>
-                                                </span>
-                                    <span id="file-name" class="file-name"
-                                          style="width:100%;max-width:100%">{{ user_info.profile_pic }}</span>
-                                </label>
                             </div>
-                        </div>
+                            <div class="level-right">
+                                <div class="level-item">
+                                    <a class="button save-button" onclick="save_place()">등록하기</a>
+                                </div>
+                                <div class="level-item">
+                                    <a class="button cancel-button"
+                                       onclick='$("#modal-post").removeClass("is-active")'>취소</a>
+                                </div>
+                            </div>
+                        </nav>
                     </div>
-                    <div class="field">
-                        <label class="label" for="textarea-about">Show the world who you are!</label>
-                        <p class="control">
-                                            <textarea id="textarea-about" class="textarea"
-                                                      placeholder="자기소개하기">{{ user_info.profile_info }}</textarea>
-                        </p>
-                    </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                        </div>
-                        <div class="level-right">
-                            <div class="level-item">
-                                <a class="button is-sparta" onclick="update_profile()">Update</a>
-                            </div>
-                            <div class="level-item">
-                                <a class="button is-sparta is-outlined"
-                                   onclick='$("#modal-edit").removeClass("is-active")'>Cancel</a>
-                            </div>
-                        </div>
-                    </nav>
+                </article>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"
+                onclick='$("#modal-post").removeClass("is-active")'></button>
+    </div>
+</section>
+<section class="map-section">
+    {#    <div id="map"></div>#}
+    <div class="map-placelist">
+        <div class="media-content">
+            <div class="field">
+                <p class="control">
+                    <input id="input-post" class="input is-rounded place-input" placeholder="맛집 이름을 입력하세요">
+                    <button type="button" class="btn btn-primary" onclick='get_address();'>찾기
+                    </button>
+                </p>
+            </div>
+        </div>
+        <div class="matjip-list" id="matjip-box">
+            <div class="card" id="card-0">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="#" class="matjip-title">혼가츠</a></h5>
+                    <p class="card-text">서울 마포구 와우산로21길 36-6 (서교동)</p>
                 </div>
-            </article>
+            </div>
         </div>
     </div>
-    <button class="modal-close is-large" aria-label="close"
-            onclick='$("#modal-edit").removeClass("is-active")'></button>
-</div>
-{% endif %}
+</section>
 
 
 </body>
