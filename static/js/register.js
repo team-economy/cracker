@@ -11,14 +11,23 @@ function sign_up() {
         alert("이메일 중복확인을 해주세요.")
         return;
     }
-    if (!is_name(user_name)) {
-        $("#help-name").text("별명을 다시 확인해주세요.").removeClass("is-safe").addClass("is-danger")
-        $("#input-user_name").focus()
-        return;
-    } else {
-        $("#help-name").text("사용할 수 있는 별명입니다.").removeClass("is-danger").addClass("is-success")
 
+    if ($("#help-name").hasClass("is-danger")) {
+        alert("별명을 다시 확인해주세요.")
+        return;
+    } else if (!$("#help-name").hasClass("is-success")) {
+        alert("별명 중복확인을 해주세요.")
+        return;
     }
+    
+    // if (!is_name(user_name)) {
+    //     $("#help-name").text("별명을 다시 확인해주세요.").removeClass("is-safe").addClass("is-danger")
+    //     $("#input-user_name").focus()
+    //     return;
+    // } else {
+    //     $("#help-name").text("사용할 수 있는 별명입니다.").removeClass("is-danger").addClass("is-success")
+    //
+    // }
     if (user_pw == "") {
         $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-password").focus()
@@ -61,7 +70,8 @@ function toggle_sign_up() {
     $("#sign-up-name").toggleClass("is-hidden")
     $("#sign-up-box").toggleClass("is-hidden")
     $("#div-sign-in-or-up").toggleClass("is-hidden")
-    $("#btn-check-dup").toggleClass("is-hidden")
+    $("#btn-check-dup-email").toggleClass("is-hidden")
+    $("#btn-check-dup-username").toggleClass("is-hidden")
     $("#help-mail").toggleClass("is-hidden")
     $("#help-name").toggleClass("is-hidden")
     $("#help-password").toggleClass("is-hidden")
@@ -83,7 +93,7 @@ function is_password(asValue) {
     return regExp.test(asValue);
 }
 
-function check_dup() {
+function check_email_dup() {
     let user_mail = $("#input-user_mail").val()
     console.log(user_mail)
     if (user_mail == "") {
@@ -99,7 +109,7 @@ function check_dup() {
     $("#help-mail").addClass("is-loading")
     $.ajax({
         type: "POST",
-        url: "/sign_up/check_dup",
+        url: "/sign_up/check_email_dup",
         data: {
             user_mail_give: user_mail
         },
@@ -109,6 +119,30 @@ function check_dup() {
                 $("#input-user_mail").focus()
             } else {
                 $("#help-mail").text("사용할 수 있는 이메일입니다.").removeClass("is-danger").addClass("is-success")
+            }
+            $("#help-mail").removeClass("is-loading")
+
+        }
+    });
+}
+
+function check_user_dup() {
+    let user_name = $("#input-user_name").val()
+    console.log(user_name)
+
+    $("#help-name").addClass("is-loading")
+    $.ajax({
+        type: "POST",
+        url: "/sign_up/check_user_dup",
+        data: {
+            user_name_give: user_name
+        },
+        success: function (response) {
+            if (response["exists"]) {
+                $("#help-name").text("이미 존재하는 별명입니다.").removeClass("is-safe").addClass("is-danger")
+                $("#input-user_name").focus()
+            } else {
+                $("#help-name").text("사용할 수 있는 별명입니다.").removeClass("is-danger").addClass("is-success")
             }
             $("#help-mail").removeClass("is-loading")
 
