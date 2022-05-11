@@ -11,10 +11,10 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'Cracker'
 
-bp = Blueprint('place', __name__)
+bp = Blueprint('place', __name__, url_prefix='/place')
 
 # 맛집 검색하면 키워드에 해당하는 목록을 전달
-@bp.route("/place/search", methods=['GET'])
+@bp.route("/search", methods=['GET'])
 def get_address():
     place_receive = request.args.get("place_give")
     if (place_receive == ""):
@@ -33,7 +33,7 @@ def get_address():
 
 
 # 선택한 맛집 DB에 저장
-@bp.route("/place/save", methods=['POST'])
+@bp.route("/save", methods=['POST'])
 def save_place():
     token_receive = request.cookies.get('mytoken')
     try:
@@ -69,7 +69,7 @@ def save_place():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-@bp.route("/place/delete", methods=['DELETE'])
+@bp.route("/delete", methods=['DELETE'])
 def delete_place():
     token_receive = request.cookies.get('mytoken')
     try:
