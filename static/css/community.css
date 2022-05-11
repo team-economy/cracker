@@ -1,0 +1,84 @@
+body {
+    background-color: rgba(255, 255, 128, .5);
+    min-height: 100vh;
+    padding-top: 20rem;
+}
+
+.section {
+    padding: 1rem 1.5rem;
+    max-width: 750px;
+    margin: auto;
+}
+
+.is-sparta {
+    color: #080102 !important;
+}
+
+.button.is-sparta {
+    background-color: #080102;
+    border-color: transparent;
+    color: #fff !important;
+    border-radius: 20px;
+    margin: 3px;
+    margin-left: 15px;
+}
+
+.button.is-cracker.is-outlined {
+    background-color: transparent;
+    border-color: #080102;
+    color: #080102 !important;
+}
+.button{
+    padding: 1rem 1.5rem;
+    margin: auto;
+    padding: 1rem 1.5rem;
+}
+
+.modal-content {
+    width: 600px;
+    max-width: 80%;
+}
+
+input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.image img {
+    object-fit:cover;
+    width:100%;
+    height:100%;
+}
+.media-content {
+    width: 20px;
+    max-width: 80%;
+}
+.textarea {
+    border-radius: 50px 50px 50px 50px;
+    min-height: 5rem;
+    overflow-y: hidden;
+    resize: none;
+}
+.btn-outline-dark{
+    border-color:  #ddd ;
+    border-radius: 10px;
+    font-size: .8em ;
+    margin: 5px;
+}
+.textarea:not([rows]) {
+    max-height: 10em;
+    background-color: RGBA(232, 52, 78, 0.2);
+    min-height: 5vh;
+		padding-top: 3.25rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
