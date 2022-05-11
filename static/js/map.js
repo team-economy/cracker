@@ -49,13 +49,13 @@ function make_marker(matjip) {
 function make_card(i, matjip) {
     let place_addr = matjip["matjip_address"]
     let html_temp = `<div class="card" id="card-${i}">
-                                <div class="card-body">
+                                <div class="card-body" style="background-color: #FDF6EC;">
                                     <h5 class="card-title"><a href="javascript:click2center(${i})" class="matjip-title">${matjip['matjip_name']}</a></h5>
                                     <p class="card-text">지번 주소 : ${matjip['matjip_address']}</p>
                                     <p class="card-text">도로명 주소 : ${matjip['matjip_road_address']}</p>
                                     <p class="community-delete">
-                                    <button class="button is-success">커뮤니티
-                                    </button>&nbsp&nbsp&nbsp<button class="button is-danger" onclick="delete_place('${place_addr}')">삭제</button>
+                                    <button class="button is-success" style="background-color: #A0BCC2;">커뮤니티
+                                    </button>&nbsp&nbsp&nbsp<button class="button is-danger" style="background-color: #ECA6A6" onclick="delete_place('${place_addr}')">삭제</button>
                                     </p>
                                 </div>
                             </div>`

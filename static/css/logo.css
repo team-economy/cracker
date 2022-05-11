@@ -1,5 +1,5 @@
 body {
-    background-color: lemonchiffon;
+    background-color: #F3E9DD;
     min-height: 100vh;
     padding-top: 3.25rem;
 }
@@ -7,11 +7,16 @@ body {
 /* Title and Subtitle */
 
 .title {
-    font-family: 'Koulen', cursive;
+    font-family: 'Merriweather', serif;
     font-size: xxx-large;
-    color: goldenrod !important;
+    font-weight: 1100;
+    color: #68A7AD !important;
+}
+
+.hero {
+    color: #3A3845;
 }
 
 .subtitle {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Source Code Pro', monospace;
 }
