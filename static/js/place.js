@@ -4,7 +4,7 @@ function get_address() {
     $("#place_list").empty();
     $.ajax({
         type: "GET",
-        url: `/get_address?place_give=${matjip_name}`,
+        url: `/place/search?place_give=${matjip_name}`,
         data: {},
         success: function (response) {
             if (response["result"] == "success") {
@@ -52,7 +52,7 @@ function save_place() {
 
     $.ajax({
         type: "POST",
-        url: `/save_place`,
+        url: `/place/save`,
         data: {
             place_give: place,
             addr_give: addr,
@@ -78,7 +78,7 @@ function save_place() {
 function delete_place(addr) {
     $.ajax({
         type: "DELETE",
-        url: `/place_delete`,
+        url: `/place/delete`,
         data: {
             addr_give: addr
         },
