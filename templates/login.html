@@ -24,7 +24,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
 
     <!-- Import CSS -->
     <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
@@ -36,35 +36,19 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
     <!-- Import JS -->
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 
-
-    <style>
-        .button.is-craker {
-            background-color: black;
-            border-color: transparent;
-            color: #fff !important;
-        }
-
-        .button.is-craker.is-outlined {
-            background-color: transparent;
-            border-color: black;
-            color: black !important;
-        }
-
-        .help {
-            color: gray;
-        }
-
-    </style>
+    <!-- Import CSS -->
+    <link href="{{ url_for('static', filename='css/blog_footer.css') }}" rel="stylesheet">
 </head>
+
 <body>
-<body>
-<section class="hero is-white">
+
+<section class="hero" style="background-color: #FDF6EC">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
-        <h1 class="title">CRACKER</h1>
+        <h1 class="title" style="font-style: italic">CRACKER</h1>
         <h3 class="subtitle">Share crumbs of every moment</h3>
     </div>
 </section>
@@ -77,19 +61,30 @@
                         <div class="field has-addons">
                             <div class="control has-icons-left" style="width:100%">
                                 <input id="input-user_mail" class="input" type="text" placeholder="이메일">
-                                <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
+                                <span class="icon is-small is-left"><i class="fa fa-envelope"></i></span>
                             </div>
-                            <div id="btn-check-dup" class="control is-hidden">
-                                <button class="button is-craker" onclick="check_dup()">중복확인</button>
+                            <div id="btn-check-dup-email" class="control is-hidden">
+                                <button class="button is-craker" onclick="check_email_dup()">중복확인</button>
                             </div>
                         </div>
+
                         <p id="help-mail" class="help is-hidden">이메일을 입력해주세요.</p>
                         <p id="help-id-login" class="help is-danger"></p>
+
                         <div id="sign-up-name" class="is-hidden">
-                            <input id="input-user_name" class="input" type="text" placeholder="별명">
-                            <p id="help-name" class="help is-hidden">별명을 입력해주세요.</p>
-                            <p id="help-name-sign" class="help is-safe"></p>
+                            <div class="field has-addons">
+                                <div class="control has-icons-left" style="width:100%">
+                                    <input id="input-user_name" class="input" type="text" placeholder="별명">
+                                    <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
+                                </div>
+                                <div id="btn-check-dup-username" class="control is-hidden">
+                                    <button class="button is-craker" onclick="check_user_dup()">중복확인</button>
+                                </div>
+                            </div>
                         </div>
+                        <p id="help-name" class="help is-hidden">별명을 입력해주세요.</p>
+                        <p id="help-name-login" class="help is-danger"></p>
+
                         <div class="field">
                             <div class="control has-icons-left">
                                 <input id="input-password" class="input" type="password" placeholder="비밀번호">
@@ -102,8 +97,10 @@
                     </div>
                     <div id="div-sign-in-or-up" class="has-text-centered">
                         <nav class="level is-mobile">
-                            <button class="level-item button is-craker" onclick="sign_in()">
-                                로그인
+                            <button class="level-item button is-craker"
+                                    style="background-color: #B7CADB; font-family: 'Source Code Pro', monospace;"
+                                    onclick="sign_in()">
+                                Crack in
                             </button>
                         </nav>
                         <hr>
@@ -111,6 +108,7 @@
                         <nav class="level is-mobile">
 
                             <button class="level-item button is-craker is-outlined"
+                                    style="background-color: #DAB88B; font-family: 'Gowun Batang', serif"
                                     onclick="toggle_sign_up()">
                                 회원가입하기
                             </button>
@@ -122,7 +120,7 @@
                             <div class="field">
                                 <div class="control has-icons-left" style="width:100%">
                                     <input id="input-password2" class="input" type="password"
-
+                                           style="font-family: 'Gowun Batang', serif;"
                                            placeholder="비밀번호 재입력">
                                     <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
                                 </div>
@@ -130,10 +128,14 @@
                             </div>
                         </div>
                         <nav class="level is-mobile">
-                            <button class="level-item button is-craker" onclick="sign_up()">
+                            <button class="level-item button is-craker"
+                                    style="background-color: #B7CADB; font-family: 'Gowun Batang', serif;"
+                                    onclick="sign_up()">
                                 회원가입
                             </button>
-                            <button class="level-item button is-craker is-outlined" onclick="toggle_sign_up()">
+                            <button class="level-item button is-craker is-outlined"
+                                    style="background-color: #ECA6A6; font-family: 'Gowun Batang', serif;"
+                                    onclick="toggle_sign_up()">
                                 취소
 
                             </button>
