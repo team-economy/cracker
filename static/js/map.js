@@ -22,7 +22,7 @@ function get_place() {
     infowindows = []
     $.ajax({
         type: "GET",
-        url: `/get_place`,
+        url: `/map/mark`,
         data: {},
         success: function (response) {
             let matjips = response["matjip_list"]
