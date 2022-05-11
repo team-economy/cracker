@@ -4,16 +4,26 @@ h5 {
 
 /* map and place list */
 
-.map-section {
+.index.map-section {
     width: 100%;
     height: 600px;
     max-width: 1500px;
-    margin: 80px auto 20px auto;
+    margin: 80px auto 0px auto;
     background-color: #F3E9DD;
 }
+
+.user.map-section {
+    width: 100%;
+    height: 600px;
+    max-width: 1500px;
+    margin: 80px auto 0px auto;
+    background-color: #F3E9DD;
+}
+
 body {
     background-color: #F3E9DD;;
 }
+
 #map {
     float: left;
     width: 60%;
@@ -35,15 +45,29 @@ body {
     margin-left: 10px;
 }
 
+.user.place-input {
+    width: 85%;
+    margin-left: 20px;
+}
+
 .find-btn {
     margin-left: 10px;
 }
 
-.map-placelist {
+.user.find-btn {
+    margin-left: 20px;
+}
+
+.index.map-placelist {
     float: left;
     width: 35%;
 
     margin-left: 50px;
+}
+
+.user.map-placelist {
+    width: 50%;
+    margin: auto;
 }
 
 .matjip-list {
@@ -89,6 +113,6 @@ body {
     color: #3A3845;
 }
 
-.community-delete{
+.community-delete {
     text-align: right;
 }

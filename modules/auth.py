@@ -64,7 +64,9 @@ def sign_up():
         "user_pw": password_hash,                                  # 비밀번호
         "user_pic": "",                                          # 프로필 사진 파일 이름
         "user_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
-        "user_info": ""                                          # 프로필 한 마디
+        "user_info": "" ,                                         # 프로필 한 마디
+        "marker_pic":"",
+        "marker_pic_real": "marker_pics/marker-default.png"
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})

@@ -30,17 +30,20 @@ function get_place() {
             for (let i = 0; i < matjips.length; i++) {
                 let matjip = matjips[i]
                 make_card(i, matjip)
-                let marker = make_marker(matjip)
+                let marker = make_marker(matjip, matjip["marker_pic_real"])
                 add_info(i, marker, matjip)
             }
         }
     });
 }
 
-function make_marker(matjip) {
+function make_marker(matjip, user_marker) {
+    var HOME_PATH = window.HOME_PATH || '.';
+    let marker_icon = user_marker
     let marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(matjip["y"], matjip["x"]),
-        map: map
+        map: map,
+        icon: HOME_PATH+'/static/'+marker_icon
     });
     markers.push(marker);
     return marker

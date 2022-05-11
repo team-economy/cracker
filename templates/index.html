@@ -50,7 +50,7 @@
 <body>
 <div class="user-info">
     <p>
-        <span class="user-name"><a>{{ user_info.user_name }}</a>님 안녕하세요? &nbsp&nbsp</span>
+        <span class="user-name"><a id="user_name" href="/user/{{ user_info.user_mail }}">{{ user_info.user_name }}</a>님 안녕하세요? &nbsp&nbsp</span>
         <button class="button"
                 style="font-family: 'Source Code Pro', monospace; font-weight: bolder; background-color: #E3B7A0"
                 onclick="sign_out()">Crack OUT
@@ -93,9 +93,9 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
-<section class="map-section">
+<section class="index map-section">
     <div id="map"></div>
-    <div class="map-placelist">
+    <div class="index map-placelist">
         <div class="media-content">
             <div class="field">
                 <p class="control">
@@ -124,6 +124,8 @@
     <div class="blog-list column" id="blog-box"></div>
     <div class="blog-middle column" id="blog-box-middle"></div>
 </div>
-<div class="footer">Copyright © 2022 Cracker. All rights reserved.</div>
+<footer class="footer">
+    Copyright © 2022 Cracker. All rights reserved.
+</footer>
 </body>
 </html>

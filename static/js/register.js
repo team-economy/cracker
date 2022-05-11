@@ -19,15 +19,7 @@ function sign_up() {
         alert("별명 중복확인을 해주세요.")
         return;
     }
-    
-    // if (!is_name(user_name)) {
-    //     $("#help-name").text("별명을 다시 확인해주세요.").removeClass("is-safe").addClass("is-danger")
-    //     $("#input-user_name").focus()
-    //     return;
-    // } else {
-    //     $("#help-name").text("사용할 수 있는 별명입니다.").removeClass("is-danger").addClass("is-success")
-    //
-    // }
+
     if (user_pw == "") {
         $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-password").focus()
