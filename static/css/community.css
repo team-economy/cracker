@@ -14,7 +14,7 @@ body {
     color: #080102 !important;
 }
 
-.button.is-sparta {
+.button.is-cracker {
     background-color: #080102;
     border-color: transparent;
     color: #fff !important;
@@ -68,7 +68,7 @@ input::-webkit-calendar-picker-indicator {
     max-height: 10em;
     background-color: RGBA(232, 52, 78, 0.2);
     min-height: 5vh;
-		padding-top: 3.25rem;
+		padding-top: 0.75rem;
 }
 
 

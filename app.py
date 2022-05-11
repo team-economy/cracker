@@ -64,27 +64,52 @@ def get_posts():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         my_user_name = payload["id"]
-        user_name_receive = request.args.get("user_name_give")
+        # user_name_receive = request.args.get("user_name_give")
             #date 내림차순 (최근것부터).20개 한정
         # if user_name_receive == "":
         #     posts = list(db.posts.find({}).sort("date", -1).limit(20))
         # else:
         #     posts = list(db.posts.find({"user_name": user_name_receive}).sort("date", -1).limit(20))
-        posts=list(db.posts.find({},{'_id': False}).sort("date", -1))
+        posts = list(db.posts.find({},{'_id': False}).sort("date", -1))
         print(posts)
             #좋아요 고유식별자
-        # for post in posts:
-        #     post["_id"] = str(post["_id"])
-        #
-        #     post["count_like"] = db.likes.count_documents({"post_id": post["_id"], "type": "like"})
-        #     post["like_by_me"] = bool(
-        #         db.likes.find_one({"post_id": post["_id"], "type": "like", "user_name": my_user_name}))
-        #
-        #     post["count_unlike"] = db.likes.count_documents({"post_id": post["_id"], "type": "unlike"})
-        #     post["unlike_by_me"] = bool(
-        #         db.likes.find_one({"post_id": post["_id"], "type": "unlike", "user_name": my_user_name}))
+        for post in posts:
+            post["_id"] = str(post["_id"])
+
+            post["count_like"] = db.likes.count_documents({"post_id": post["_id"], "type": "like"})
+            post["like_by_me"] = bool(
+                db.likes.find_one({"post_id": post["_id"], "type": "like", "user_name": my_user_name}))
+
+            post["count_unlike"] = db.likes.count_documents({"post_id": post["_id"], "type": "unlike"})
+            post["unlike_by_me"] = bool(
+                db.likes.find_one({"post_id": post["_id"], "type": "unlike", "user_name": my_user_name}))
 
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+@app.route('/update_like', methods=['POST'])
+def update_like():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 좋아요 수 변경
+        user_info = db.users.find_one({"user_mail": payload["id"]})
+        post_id_receive = request.form["post_id_give"]
+        type_receive = request.form["type_give"]
+        action_receive = request.form["action_give"]
+        doc = {
+            "post_id": post_id_receive,
+            "user_name": user_info["user_name"],
+            "type": type_receive
+        }
+        if action_receive =="like":
+            db.likes.insert_one(doc)
+        else:
+            db.likes.delete_one(doc)
+        count = db.likes.count_documents({"post_id": post_id_receive, "type": type_receive})
+        print(count)
+        return jsonify({"result": "success", 'msg': 'updated', "count": count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
