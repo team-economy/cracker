@@ -41,31 +41,14 @@
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 
-
-    <style>
-        .button.is-craker {
-            background-color: black;
-            border-color: transparent;
-            color: #fff !important;
-        }
-
-        .button.is-craker.is-outlined {
-            background-color: transparent;
-            border-color: black;
-            color: black !important;
-        }
-
-        .help {
-            color: gray;
-        }
-
-    </style>
+    <!-- Import CSS -->
+    <link href="{{ url_for('static', filename='css/blog_footer.css') }}" rel="stylesheet">
 </head>
-<body>
+
 <body>
 <section class="hero" style="background-color: #FDF6EC">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
-        <h1 class="title">CRACKER</h1>
+        <h1 class="title" style="font-style: italic">CRACKER</h1>
         <h3 class="subtitle">Share crumbs of every moment</h3>
     </div>
 </section>
@@ -103,15 +86,15 @@
                     </div>
                     <div id="div-sign-in-or-up" class="has-text-centered">
                         <nav class="level is-mobile">
-                            <button class="level-item button is-craker" onclick="sign_in()">
-                                로그인
+                            <button class="level-item button is-craker" style="background-color: #B7CADB" onclick="sign_in()">
+                                Crack in
                             </button>
                         </nav>
                         <hr>
                         <h4 class="mb-3">아직 회원이 아니라면</h4>
                         <nav class="level is-mobile">
 
-                            <button class="level-item button is-craker is-outlined"
+                            <button class="level-item button is-craker is-outlined" style="background-color: #DAB88B"
                                     onclick="toggle_sign_up()">
                                 회원가입하기
                             </button>
@@ -131,10 +114,10 @@
                             </div>
                         </div>
                         <nav class="level is-mobile">
-                            <button class="level-item button is-craker" onclick="sign_up()">
+                            <button class="level-item button is-craker" style="background-color: #B7CADB" onclick="sign_up()">
                                 회원가입
                             </button>
-                            <button class="level-item button is-craker is-outlined" onclick="toggle_sign_up()">
+                            <button class="level-item button is-craker is-outlined" style="background-color: #ECA6A6"  onclick="toggle_sign_up()">
                                 취소
 
                             </button>

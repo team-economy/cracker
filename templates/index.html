@@ -26,6 +26,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Source+Code+Pro:ital,wght@0,300;1,300&display=swap"
           rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
     <!-- Import CSS -->
     <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/map_place.css') }}" rel="stylesheet">
@@ -66,7 +68,7 @@
             <div class="modal-content">
                 <div class="box">
                     <article class="media">
-                        <div class="media-content">
+                        <div class="media-content" >
                             <div class="field modal-list" id="place_list"></div>
                             <nav class="level is-mobile">
                                 <div class="level-left">
@@ -96,8 +98,8 @@
             <div class="media-content">
                 <div class="field">
                     <p class="control">
-                        <input id="input-post" class="input is-rounded place-input" placeholder="맛집 이름을 입력하세요">
-                        <button type="button" class="btn btn-primary find-btn" onclick='get_address();'>찾기
+                        <input id="input-post" class="input is-rounded place-input"style="background-color: #FBF8F1" placeholder="맛집 이름을 입력하세요">
+                        <button type="button" class="btn btn-primary find-btn" style="background-color: #DAB88B; border-color: #DAB88B;" onclick='get_address();'>찾기
                         </button>
                     </p>
                 </div>
