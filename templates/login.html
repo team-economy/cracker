@@ -24,7 +24,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
 
     <!-- Import CSS -->
     <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
@@ -36,7 +36,6 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
     <!-- Import JS -->
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     <script src="{{ url_for('static', filename='js/register.js') }}"></script>
@@ -68,6 +67,7 @@
                                 <button class="button is-craker" onclick="check_email_dup()">중복확인</button>
                             </div>
                         </div>
+
                         <p id="help-mail" class="help is-hidden">이메일을 입력해주세요.</p>
                         <p id="help-id-login" class="help is-danger"></p>
 
@@ -97,7 +97,9 @@
                     </div>
                     <div id="div-sign-in-or-up" class="has-text-centered">
                         <nav class="level is-mobile">
-                            <button class="level-item button is-craker" style="background-color: #B7CADB" onclick="sign_in()">
+                            <button class="level-item button is-craker"
+                                    style="background-color: #B7CADB; font-family: 'Source Code Pro', monospace;"
+                                    onclick="sign_in()">
                                 Crack in
                             </button>
                         </nav>
@@ -105,7 +107,8 @@
                         <h4 class="mb-3">아직 회원이 아니라면</h4>
                         <nav class="level is-mobile">
 
-                            <button class="level-item button is-craker is-outlined" style="background-color: #DAB88B"
+                            <button class="level-item button is-craker is-outlined"
+                                    style="background-color: #DAB88B; font-family: 'Gowun Batang', serif"
                                     onclick="toggle_sign_up()">
                                 회원가입하기
                             </button>
@@ -117,7 +120,7 @@
                             <div class="field">
                                 <div class="control has-icons-left" style="width:100%">
                                     <input id="input-password2" class="input" type="password"
-
+                                           style="font-family: 'Gowun Batang', serif;"
                                            placeholder="비밀번호 재입력">
                                     <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
                                 </div>
@@ -125,10 +128,14 @@
                             </div>
                         </div>
                         <nav class="level is-mobile">
-                            <button class="level-item button is-craker" style="background-color: #B7CADB" onclick="sign_up()">
+                            <button class="level-item button is-craker"
+                                    style="background-color: #B7CADB; font-family: 'Gowun Batang', serif;"
+                                    onclick="sign_up()">
                                 회원가입
                             </button>
-                            <button class="level-item button is-craker is-outlined" style="background-color: #ECA6A6"  onclick="toggle_sign_up()">
+                            <button class="level-item button is-craker is-outlined"
+                                    style="background-color: #ECA6A6; font-family: 'Gowun Batang', serif;"
+                                    onclick="toggle_sign_up()">
                                 취소
 
                             </button>
