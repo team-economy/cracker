@@ -58,5 +58,37 @@ def posting():
         return redirect(url_for("home"))
 
 
+@app.route("/get_posts", methods=['GET'])
+def get_posts():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        my_user_name = payload["id"]
+        user_name_receive = request.args.get("user_name_give")
+            #date 내림차순 (최근것부터).20개 한정
+        # if user_name_receive == "":
+        #     posts = list(db.posts.find({}).sort("date", -1).limit(20))
+        # else:
+        #     posts = list(db.posts.find({"user_name": user_name_receive}).sort("date", -1).limit(20))
+        posts=list(db.posts.find({},{'_id': False}).sort("date", -1))
+        print(posts)
+            #좋아요 고유식별자
+        # for post in posts:
+        #     post["_id"] = str(post["_id"])
+        #
+        #     post["count_like"] = db.likes.count_documents({"post_id": post["_id"], "type": "like"})
+        #     post["like_by_me"] = bool(
+        #         db.likes.find_one({"post_id": post["_id"], "type": "like", "user_name": my_user_name}))
+        #
+        #     post["count_unlike"] = db.likes.count_documents({"post_id": post["_id"], "type": "unlike"})
+        #     post["unlike_by_me"] = bool(
+        #         db.likes.find_one({"post_id": post["_id"], "type": "unlike", "user_name": my_user_name}))
+
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

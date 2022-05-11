@@ -26,28 +26,34 @@
     <script src="{{ url_for('static', filename='js/community.js') }}"></script>
     <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
 
+    <script>
+        $(document).ready(function () {
+            get_posts()
+        })
+
+    </script>
 </head>
 <body>
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="../static/profile_pics/cracker_48x48.png">
+            <img src="{{ url_for("static", filename="cracker_48x48.png") }}">
             <strong class="is-cracker"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;">Cracker</strong>
         </a>
     </div>
     <div class="user-info">
-    <p>
-        <span class="user-name"><a>{{ user_info.user_name }}</a>님 안녕하세요? &nbsp&nbsp</span>
-        <button class="button is-dark is-rounded" onclick="sign_out()">Crack OUT</button>
-    </p>
-</div>
+        <p>
+            <span class="user-name"><a>{{ user_info.user_name }}</a>님 안녕하세요? &nbsp&nbsp</span>
+            <button class="button is-dark is-rounded" onclick="sign_out()">Crack OUT</button>
+        </p>
+    </div>
 </nav>
 <section class="section">
     <article class="media">
         <figure class="media-left" style="align-self: center">
             <a class="image is-32x32" href="#">
-                <img class="is-rounded" src="{{ url_for("static", filename="profile_pics/profile_placeholder.png") }}">
+                <img class="is-rounded" src="{{ url_for("static", filename="profile_placeholder.png") }}">
             </a>
         </figure>
         <div class="media-content">
@@ -71,7 +77,7 @@
                 <div class="media-left">
                     <a class="image is-64x64" href="#">
                         <img class="is-rounded"
-                             src={{ url_for("static", filename="profile_pics/profile_placeholder.png") }} alt="Image">
+                             src={{ url_for("static", filename="profile_placeholder.png") }} alt="Image">
                     </a>
                 </div>
                 <div class="media-content">
