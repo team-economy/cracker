@@ -9,8 +9,11 @@ h5 {
     height: 600px;
     max-width: 1500px;
     margin: 80px auto 20px auto;
+    background-color: #C69B7B;
 }
-
+body {
+    background-color: #C69B7B;;
+}
 #map {
     float: left;
     width: 60%;
@@ -18,6 +21,7 @@ h5 {
 
     margin-top: 20px;
     margin-bottom: 20px;
+    background-color: #C69B7B;
 
     z-index: 0;
 }
@@ -48,7 +52,6 @@ h5 {
     position: relative;
 }
 
-
 /* modal */
 
 .modal-section {
@@ -66,14 +69,14 @@ h5 {
 }
 
 .button.save-button {
-    background-color: #345ee8;
+    background-color: #3A3845;
     border-color: transparent;
     color: #fff !important;
 }
 
 .button.cancel-button {
     background-color: transparent;
-    border-color: #e8344e;
+    border-color: #3A3845;
     color: #e8344e !important;
 }
 

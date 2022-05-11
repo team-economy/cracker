@@ -15,8 +15,9 @@ function get_blog() {
             for (let i = 0; i < blogs.length; i++) {
                 let blog = blogs[i]
                 let html_temp = `<div>
-                                       <a href="${blog['link']}" target="_blank" id="place_name">&nbsp&nbsp&nbsp&nbsp<b>${blog['title']}</b></a>
-                                       <p>&nbsp;</p>
+                                   <a href="${blog['link']}" target="_blank" id="place_name">&nbsp&nbsp&nbsp&nbsp<b>${blog['title']}</b></a>
+                                       <p> </p>
+                                       </label>
                                 </div>`
                 $("#blog-box").append(html_temp);
             }

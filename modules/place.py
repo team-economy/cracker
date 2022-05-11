@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import jwt
-from flask import Flask, jsonify, request, redirect, url_for,Blueprint
+from flask import Flask, jsonify, request, redirect, url_for, Blueprint
 import requests
 
 app = Flask(__name__)

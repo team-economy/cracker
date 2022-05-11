@@ -1,0 +1,29 @@
+body {
+    background-color: #C69B7B;
+    min-height: 100vh;
+}
+
+/* blog */
+ .column {
+            float: left;
+            width: 50%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .blog-middle {
+            right: 25%;
+            left: 30%;
+        }
+
+.footer {
+    float: right;
+}
+
+.blog-title {
+
+}
