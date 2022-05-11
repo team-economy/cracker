@@ -1,5 +1,5 @@
 h5 {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 /* map and place list */
@@ -9,10 +9,10 @@ h5 {
     height: 600px;
     max-width: 1500px;
     margin: 80px auto 20px auto;
-    background-color: #C69B7B;
+    background-color: #F3E9DD;
 }
 body {
-    background-color: #C69B7B;;
+    background-color: #F3E9DD;;
 }
 #map {
     float: left;
@@ -21,7 +21,7 @@ body {
 
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: #C69B7B;
+    background-color: #F3E9DD;
 
     z-index: 0;
 }
@@ -71,13 +71,13 @@ body {
 .button.save-button {
     background-color: #3A3845;
     border-color: transparent;
-    color: #fff !important;
+    color: #FDF6EC !important;
 }
 
 .button.cancel-button {
-    background-color: transparent;
-    border-color: #3A3845;
-    color: #e8344e !important;
+    background-color: #FDF6EC;
+    border-color: #FDF6EC;
+    color: #3A3845 !important;
 }
 
 .iw-inner {
@@ -86,7 +86,7 @@ body {
 }
 
 .place-phone {
-    color: blue;
+    color: #3A3845;
 }
 
 .community-delete{
