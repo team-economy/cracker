@@ -1,6 +1,7 @@
 function post() {
     let comment = $("#textarea-post").val()
-    let today = new Date().toISOString()
+    let date_time = datetime.now()
+    let today = date_time.strftime("%Y-%m-%d-%H-%M-%S")
     $.ajax({
         type: "POST",
         url: "/posting",
@@ -28,8 +29,10 @@ function get_posts() {
                 console.log(posts)
                 for (let i = 0; i < posts.length; i++) {
                     let post = posts[i]
-                    let time_post = new Date(post["date"])
-                    let time_before = time2str(time_post)
+                    //let time_post = new Date(post["date"])
+                    // let time_before = time2str(time_post)
+                    let date_time = datetime.now()
+                    let today = date_time.strftime("%Y-%m-%d-%H-%M-%S")
                                             // 삼항             true 값              False 값
                     let class_like = post['like_by_me'] ? "fa-thumbs-up" : "fa-thumbs-o-up"
                     let class_unlike = post['like_by_me'] ? "fa-thumbs-down" : "fa-thumbs-o-down"
@@ -46,12 +49,12 @@ function get_posts() {
                                             <div class="media-content">
                                                      <p class="community-delete">
                                                     <button class="btn btn-white btn-animate">수정
-                                                    </button>&nbsp&nbsp&nbsp<button class="btn btn-white btn-animate" onclick="delete_date('${post_date}')">삭제</button>
+                                                    </button>&nbsp&nbsp&nbsp<button class="btn btn-white btn-animate" onclick="delete_date('${today}')">삭제</button>
                                                     
                                                     </p>
                                                 <div class="content">
                                                     <p>
-                                                        <strong>${post['user_name']}</strong> <small>${time_before}</small>
+                                                        <strong>${post['user_name']}</strong> <small>${today}</small>
                                                         <br>
                                                         ${post['comment']}
                                                     </p>
@@ -80,23 +83,23 @@ function get_posts() {
     })
 }
 
-function time2str(date) {
-    let today = new Date()
-    let time = (today - date) / 1000 / 60  // 분
-
-    if (time < 60) {
-        return parseInt(time) + "분 전"
-    }
-    time = time / 60  // 시간
-    if (time < 24) {
-        return parseInt(time) + "시간 전"
-    }
-    time = time / 24
-    if (time < 7) {
-        return parseInt(time) + "일 전"
-    }
-    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
-}
+// function time2str(date) {
+//     let today = new Date()
+//     let time = (today - date) / 1000 / 60  // 분
+//
+//     if (time < 60) {
+//         return parseInt(time) + "분 전"
+//     }
+//     time = time / 60  // 시간
+//     if (time < 24) {
+//         return parseInt(time) + "시간 전"
+//     }
+//     time = time / 24
+//     if (time < 7) {
+//         return parseInt(time) + "일 전"
+//     }
+//     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
+// }
 
 function toggle_like(post_id, type) {
     console.log(post_id, type)

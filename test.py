@@ -51,6 +51,7 @@ def posting():
             "user_pic_real": user_info["user_pic_real"],
             "comment": comment_receive,
             "date": date_receive
+
         }
         db.posts.insert_one(doc)
         return jsonify({"result": "success", 'msg': '포스팅 성공'})
