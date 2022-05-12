@@ -64,7 +64,7 @@
         <article class="media">
             <div class="media-content">
                 <div class="content">
-                    <h3><b>{{ place_title.matjip_name }}</b></h3>
+                    <h3 id="matjip_name"><b>{{ place_title.matjip_name }}</b></h3>
                     <p>카테고리 : {{ place_title.category }}</p>
                     <p>지번 주소 : {{ place_title.matjip_address }}</p>
                     <p>도로명 주소 : {{ place_title.matjip_road_address }}</p>
@@ -76,35 +76,36 @@
         </article>
     </div>
 </section>
-<section class="section">
+
+<section class="community input-comment-section">
     <article class="media">
         <figure class="media-left" style="align-self: center">
-            <a class="image is-32x32" href="#">
-                <img class="is-rounded" src="{{ url_for("static", filename="profile_placeholder.png") }}">
-            </a>
+
+
         </figure>
         <div class="media-content">
             <div class="field">
                 <p class="control">
-                    <input id="textarea-post" class="textarea" placeholder="댓글 추가...">
+                    <textarea id="textarea-post" class="textarea comment-list" rows="3" placeholder="댓글 추가..."> </textarea>
                 </p>
             </div>
         </div>
-        <div class="level-right">
+        <div class="level-right post-btn">
             <div class="level-item">
-                <a class="button is-cracker" onclick="post()">등록</a>
+                <a class="button is-cracker enroll-btn" onclick="post()">등록</a>
             </div>
         </div>
     </article>
-</section>  
-<section class="community map-section">
+</section>
+
+<section class="community posts-section">
     <div id="post-box" class="container">
         <div class="box">
             <article class="media">
                 <div class="media-left">
                     <a class="image is-64x64" href="#">
                         <img class="is-rounded"
-                             src={{ url_for("static", filename="profile_placeholder.png") }} alt="Image">
+                             src={{ url_for("static", filename="profile_pics/profile_placeholder.png") }} alt="Image">
                     </a>
                 </div>
                 <div class="media-content">
@@ -115,21 +116,12 @@
                             글을 적는 칸
                         </p>
                     </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <a class="level-item is-sparta" aria-label="heart" onclick="toggle_like('', 'heart')">
-                                <span class="icon is-small"><i class="fa fa-heart"
-                                                               aria-hidden="true"></i></span>&nbsp;<span
-                                    class="like-num">2.7k</span>
-                            </a>
-                        </div>
-
-                    </nav>
                 </div>
             </article>
         </div>
     </div>
 </section>
+
 <footer>
     <div class="footer">
         Copyright © 2022 Cracker. All rights reserved.
