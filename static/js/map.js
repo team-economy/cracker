@@ -57,7 +57,7 @@ function make_card(i, matjip) {
                                     <p class="card-text">지번 주소 : ${matjip['matjip_address']}</p>
                                     <p class="card-text">도로명 주소 : ${matjip['matjip_road_address']}</p>
                                     <p class="community-delete">
-                                    <button class="button is-success" style="background-color: #A0BCC2; font-family: 'Gowun Batang', serif">커뮤니티
+                                    <button class="button is-success" style="background-color: #A0BCC2; font-family: 'Gowun Batang', serif" onclick="location.href='/community/${matjip['matjip_name']}'">커뮤니티
                                     </button>&nbsp&nbsp&nbsp<button class="button is-danger" style="background-color: #ECA6A6; font-family: 'Gowun Batang', serif"" onclick="delete_place('${place_addr}')">삭제</button>
                                     </p>
                                 </div>
