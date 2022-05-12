@@ -3,7 +3,7 @@
 
 <head>
     <!-- Webpage Title -->
-    <title>CRACKER | Share crumbs of every moment</title>
+    <title>CRACKER | My Page</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -27,10 +27,12 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
+
     <!-- Import CSS -->
     <link href="{{ url_for('static', filename='css/blog_footer.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/map_place.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/user.css') }}" rel="stylesheet">
 
     <!-- Naver Map -->
     <script type="text/javascript"
@@ -46,31 +48,6 @@
     <script src="{{ url_for('static', filename='js/register.js') }}"></script>
     <script src="{{ url_for('static', filename='js/user.js') }}"></script>
 
-
-    <style>
-        .nav-btn {
-            margin: auto;
-            width: 800px;
-        }
-
-        .dup-btn {
-            background-color: #f3f3f4;
-        }
-
-        .category {
-            color: royalblue;
-        }
-
-        .phone {
-            color: royalblue;
-        }
-
-        .user-btn-community {
-            float : right;
-        }
-
-    </style>
-
 </head>
 
 
@@ -78,10 +55,17 @@
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="{{ url_for('static', filename='cracker_2.png') }}">
+            <img src="{{ url_for('static', filename='cracker_2.png') }}">&nbsp&nbsp
+            <h5 class="logo" style="font-style: italic">CRACKER</h5>
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;"></strong>
         </a>
+    </div>
+    <div class="crack-out">
+        <button class="button"
+                style="font-family: 'Source Code Pro', monospace; font-weight: bolder; background-color: #E3B7A0"
+                onclick="sign_out()">Crack OUT
+        </button>
     </div>
 </nav>
 
@@ -119,14 +103,8 @@
 
             <a class="button level-item has-text-centered is-sparta" aria-label="edit_marker"
                onclick='$("#modal-edit_marker").addClass("is-active")'>
-                Edit Marker&nbsp&nbsp&nbsp<span class="icon is-small"><i class="fa fa-pencil"
+                Edit Marker&nbsp&nbsp<span class="icon is-small"><i class="fa fa-map-marker"
                                                                          aria-hidden="true"></i></span>
-            </a>
-
-            <a class="button level-item has-text-centered is-sparta is-outlined" aria-label="logout"
-               onclick="sign_out()">
-                Log out&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-sign-out"
-                                                                        aria-hidden="true"></i></span>
             </a>
         </nav>
     {% endif %}

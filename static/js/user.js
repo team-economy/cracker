@@ -90,7 +90,7 @@ function make_card(i, matjip) {
                                     <div>
                                     <span class="card-text phone">전화 번호 : ${matjip['phone']}</span>
                                     <div class = "user-btn-community">
-                                    <button class="button is-success" style="background-color: #A0BCC2; font-family: 'Gowun Batang', serif">커뮤니티
+                                    <button class="button is-success" style="background-color: #A0BCC2; font-family: 'Gowun Batang', serif" onclick="location.href='/community/${matjip['matjip_name']}'">커뮤니티
                                     </button>&nbsp&nbsp&nbsp<button class="button is-danger" style="background-color: #ECA6A6; font-family: 'Gowun Batang', serif"" onclick="delete_place('${place_addr}')">삭제</button>
                                     </div>                     
                                     </p>
