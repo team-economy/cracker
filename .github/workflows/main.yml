@@ -22,9 +22,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
+          timeout: 60
           script: |
             cd cracker
             git reset --hard
             git fetch
             git pull
-            nohup python app.py &
+            python app.py
