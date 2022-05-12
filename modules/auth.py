@@ -6,7 +6,7 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for,Bl
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-client = MongoClient('localhost', 27017)
+client = MongoClient('13.124.60.163', 27017, username="test", password="test")
 db = client.cracker
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True

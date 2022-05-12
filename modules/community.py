@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import jwt
 
 app = Flask(__name__)
-client = MongoClient('localhost', 27017)
+client = MongoClient('13.124.60.163', 27017, username="test", password="test")
 db = client.cracker
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
