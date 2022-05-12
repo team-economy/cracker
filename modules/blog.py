@@ -83,5 +83,5 @@ def get_blog_middle():
             'img': img
         }
         blog_list_middle.append(docmiddle)
-        print(docmiddle)
+
     return jsonify({'result': 'success', 'blog_list_middle': blog_list_middle})

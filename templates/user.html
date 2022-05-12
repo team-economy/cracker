@@ -3,7 +3,7 @@
 
 <head>
     <!-- Webpage Title -->
-    <title>cracker | Share crumbs of every moment</title>
+    <title>CRACKER | My Page</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -23,10 +23,16 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Source+Code+Pro:ital,wght@0,300;1,300&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
 
     <!-- Import CSS -->
-    <link href="{{ url_for('static', filename='place.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/blog_footer.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/map_place.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/user.css') }}" rel="stylesheet">
 
     <!-- Naver Map -->
     <script type="text/javascript"
@@ -37,183 +43,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <!-- Import JS -->
-    <script src="{{ url_for('static', filename='place.js') }}"></script>
-
-    <style>
-        body {
-            background-color: lemonchiffon;
-            min-height: 100vh;
-            padding-top: 3.25rem;
-        }
-
-        {#<!-- Title and Subtitle -->#}
-        .title {
-            font-family: 'Koulen', cursive;
-            font-size: xxx-large;
-            color: goldenrod !important;
-        }
-
-        .subtitle {
-            font-family: 'Raleway', sans-serif;
-        }
-
-        {# map and place list #}
-        .map-section {
-            width: 100%;
-            height: 600px;
-            max-width: 1200px;
-            margin: 80px auto 20px auto;
-        }
-
-        #map {
-            float: left;
-            width: 60%;
-            height: 90%;
-
-            margin-top: 20px;
-            margin-bottom: 20px;
-
-            z-index: 0;
-        }
-
-        .media-content {
-            margin-bottom: 20px;
-        }
-
-        .place-input {
-            width: 80%;
-        }
-
-        .map-placelist {
-            float: left;
-            width: 30%;
-
-            margin-left: 30px;
-        }
-
-        .matjip-list {
-            height: 500px;
-            overflow: auto;
-        }
-
-        {# modal #}
-        .modal-section {
-            z-index: 10000000;
-        }
-
-        .modal-content {
-            width: 600px;
-            max-width: 80%;
-        }
-
-        .modal-list {
-            height: 300px;
-            overflow: auto;
-        }
-
-        .button.save-button {
-            background-color: #345ee8;
-            border-color: transparent;
-            color: #fff !important;
-        }
-
-        .button.cancel-button {
-            background-color: transparent;
-            border-color: #e8344e;
-            color: #e8344e !important;
-        }
-    </style>
-
-    <script>
-        let y_cen = 37.4981125   // lat
-        let x_cen = 127.0379399  // long
-        let map;
-        let markers = [];
-        let infowindows = [];
-        $(document).ready(function () {
-            map = new naver.maps.Map('map', {
-                center: new naver.maps.LatLng(y_cen, x_cen),
-                zoom: 12,
-                zoomControl: true,
-                zoomControlOptions: {
-                    style: naver.maps.ZoomControlStyle.SMALL,
-                    position: naver.maps.Position.TOP_RIGHT
-                }
-            });
-            get_posts()
-        })
-
-        function get_posts() {
-            $('#posts-box').empty();
-            $.ajax({
-                type: "GET",
-                url: '/maps',
-                data: {},
-                success: function (response) {
-                    let matjips = response["matjip_list"]
-                    for (let i = 0; i < matjips.length; i++) {
-                        let matjip = matjips[i]
-                        console.log(matjip)
-                        make_marker(matjip);
-                    }
-                }
-            })
-        }
-
-        function sign_out() {
-            $.removeCookie('mytoken', {path: '/'});
-            alert('정상적으로 로그아웃 되었습니다.')
-            window.location.href = "/login"
-        }
-
-        function update_profile() {
-            let name = $('#input-name').val()
-            let file = $('#input-pic')[0].files[0]
-            let about = $("#textarea-about").val()
-            let form_data = new FormData()
-            form_data.append("file_give", file)
-            form_data.append("name_give", name)
-            form_data.append("about_give", about)
-            console.log(name, file, about, form_data)
-            $.ajax({
-                type: "POST",
-                url: "/update_profile",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert(response["msg"])
-                        window.location.reload()
-
-                    }
-                }
-            });
-        }
-
-        function update_marker() {
-            let marker = $('#input-marker')[0].files[0]
-            let form_marker_data = new FormData()
-            form_marker_data.append("marker_give", marker)
-            $.ajax({
-                type: "POST",
-                url: "/update_marker",
-                data: form_marker_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert(response["msg"])
-                        window.location.reload()
-                    }
-                }
-            });
-        }
-
-    </script>
-
+    <script src="{{ url_for('static', filename='js/place.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/user.js') }}"></script>
 
 </head>
 
@@ -222,10 +55,17 @@
 <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            <img src="{{ url_for('static', filename='cracker_2.png') }}">
+            <img src="{{ url_for('static', filename='cracker_2.png') }}">&nbsp&nbsp
+            <h5 class="logo" style="font-style: italic">CRACKER</h5>
             <strong class="is-sparta"
                     style="font-family: 'Stylish', sans-serif;font-size: larger;"></strong>
         </a>
+    </div>
+    <div class="crack-out">
+        <button class="button"
+                style="font-family: 'Source Code Pro', monospace; font-weight: bolder; background-color: #E3B7A0"
+                onclick="sign_out()">Crack OUT
+        </button>
     </div>
 </nav>
 
@@ -242,7 +82,8 @@
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>{{ user_info.user_name }}</strong> <small>{{ user_info.user_mail }}</small>
+                        <strong id="user_name">{{ user_info.user_name }}</strong>
+                        <small id="user_mail">{{ user_info.user_mail }}</small>
                         <br>
                         {{ user_info.user_info }}
                     </p>
@@ -253,7 +94,7 @@
     </div>
     {#수정 및 로그아웃 버튼#}
     {% if status %}
-        <nav id="btns-me" class="level is-mobile" style="margin-top:2rem">
+        <nav id="btns-me" class="level is-mobile nav-btn" style="margin-top:2rem">
             <a class="button level-item has-text-centered is-sparta" aria-label="edit"
                onclick='$("#modal-edit").addClass("is-active")'>
                 Edit Profile&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-pencil"
@@ -262,14 +103,8 @@
 
             <a class="button level-item has-text-centered is-sparta" aria-label="edit_marker"
                onclick='$("#modal-edit_marker").addClass("is-active")'>
-                Edit Marker <span class="icon is-small"><i class="fa fa-pencil"
-                                                                             aria-hidden="true"></i></span>
-            </a>
-
-            <a class="button level-item has-text-centered is-sparta is-outlined" aria-label="logout"
-               onclick="sign_out()">
-                Log out&nbsp;&nbsp;&nbsp;<span class="icon is-small"><i class="fa fa-sign-out"
-                                                                        aria-hidden="true"></i></span>
+                Edit Marker&nbsp&nbsp<span class="icon is-small"><i class="fa fa-map-marker"
+                                                                         aria-hidden="true"></i></span>
             </a>
         </nav>
     {% endif %}
@@ -282,11 +117,20 @@
                     <div class="media-content">
                         <div class="field">
                             <label class="label" for="input-name">별명</label>
-                            <p class="control">
-                                <input id="input-name" class="input"
-                                       placeholder="별명" value="{{ user_info.user_name }}">
-                            </p>
+
+                            <div class="field has-addons">
+                                <div class="control has-icons-left" style="width:100%">
+                                    <input id="input-user_name" class="input" type="text" placeholder="별명"
+                                           value="{{ user_info.user_name }}">
+                                    <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
+                                </div>
+                                <div id="btn-check-dup-username" class="control">
+                                    <button class="button dup-btn" onclick="check_user_dup()">중복확인</button>
+                                </div>
+                            </div>
                         </div>
+                        <p id="help-name" class="help">별명을 입력해주세요.</p>
+                        <p id="help-name-login" class="help is-danger"></p>
                         <div class="field">
                             <label class="label" for="input-pic">프로필 사진</label>
                             <div class="control is-expanded">
@@ -379,9 +223,6 @@
                 onclick='$("#modal-edit").removeClass("is-active")'></button>
     </div>
 </section>
-
-
-{#사용자 맛집 즐겨찾기#}
 <section class="modal-section">
     <div class="modal" id="modal-post">
         <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
@@ -412,14 +253,17 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
-<section class="map-section">
-    {#    <div id="map"></div>#}
-    <div class="map-placelist">
+<section class="user map-section">
+    <div class="user map-placelist">
         <div class="media-content">
             <div class="field">
                 <p class="control">
-                    <input id="input-post" class="input is-rounded place-input" placeholder="맛집 이름을 입력하세요">
-                    <button type="button" class="btn btn-primary" onclick='get_address();'>찾기
+                    <input id="input-post" class="input user place-input"
+                           style="background-color: #FBF8F1; font-family: 'Gowun Batang', serif"
+                           placeholder="맛집 이름을 입력하세요">
+                    <button type="button" class="btn btn-primary user find-btn"
+                            style="background-color: #DAB88B; border-color: #DAB88B; font-family: 'Gowun Batang', serif"
+                            onclick='get_address();'>찾기
                     </button>
                 </p>
             </div>
@@ -435,5 +279,13 @@
     </div>
 </section>
 
+</section>
+
+<footer>
+    <div class="footer">
+        Copyright © 2022 Cracker. All rights reserved.
+    </div>
+</footer>
 
 </body>
+</html>

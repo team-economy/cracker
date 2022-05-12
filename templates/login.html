@@ -28,6 +28,7 @@
 
     <!-- Import CSS -->
     <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/blog_footer.css') }}" rel="stylesheet">
 
     <!-- Naver Map -->
     <script type="text/javascript"
@@ -36,12 +37,19 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
     <!-- Import JS -->
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 
-    <!-- Import CSS -->
-    <link href="{{ url_for('static', filename='css/blog_footer.css') }}" rel="stylesheet">
+    <!-- 뒤로가기 막기 -->
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function (event) {
+            history.go(1);
+        }
+    </script>
+
 </head>
 
 <body>

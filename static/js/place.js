@@ -20,7 +20,7 @@ function get_address() {
 
                         let html_temp = `<div class="form-check">
                                             <input class="form-check-input" type="radio" name="place" id="place${i}" 
-                                            value="${place['place_name']},${place['address_name']},${place['road_address_name']},${place['x']},${place['y']},${place['phone']}">
+                                            value="${place['place_name']},${place['address_name']},${place['road_address_name']},${place['x']},${place['y']},${place['phone']},${place['category_name']}">
                                             <label class="form-check-label" for="${place['place_name']}" id="label">
                                                 <p id="place_name"><b>${place['place_name']}</b></a>
                                                 <p>${place['category_name']}</p>
@@ -45,6 +45,7 @@ function save_place() {
     let y = radio_button.split(',')[4];
 
     let phone = radio_button.split(',')[5];
+    let category = radio_button.split(',')[6];
 
     console.log(place)
     console.log(addr)
@@ -59,7 +60,8 @@ function save_place() {
             addr_road_give: addr_road,
             x_give: x,
             y_give: y,
-            phone_give: phone
+            phone_give: phone,
+            category_give: category
         },
         success: function (response) {
             if (response["msg"] == "저장 완료!!") {
