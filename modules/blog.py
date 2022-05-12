@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-client = MongoClient('13.124.60.163', 27017, username="test", password="test")
+client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.cracker
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
