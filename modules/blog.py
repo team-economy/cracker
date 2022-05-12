@@ -31,7 +31,7 @@ def get_blog():
     soup = BeautifulSoup(data.text, 'html.parser')
 
     trs = soup.select(
-        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[0:2]
+        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[0:10]
     blog_list = []
 
     for tr in trs:
@@ -63,7 +63,7 @@ def get_blog_middle():
     soup = BeautifulSoup(data.text, 'html.parser')
 
     trs = soup.select(
-        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[3:5]
+        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[10:14]
 
     blog_list_middle = []
 
