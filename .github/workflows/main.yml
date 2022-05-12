@@ -13,6 +13,7 @@ on:
 jobs:
   SSH:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
 
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +23,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
-          timeout-minute: 1
           script: |
             cd cracker
             git reset --hard
