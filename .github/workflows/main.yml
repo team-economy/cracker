@@ -22,7 +22,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
-          timeout: 60
+          timeout-minute: 1
           script: |
             cd cracker
             git reset --hard
