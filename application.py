@@ -14,22 +14,6 @@ application.register_blueprint(blog.bp)
 application.register_blueprint(user.bp)
 application.register_blueprint(community.bp)
 
-@application.route('/fileupload', methods=['POST'])
-def file_upload():
-    file = request.files['file']
-    s3 = boto3.client('s3',
-                      aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
-                      aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"]
-                      )
-    s3.put_object(
-        ACL="public-read",
-        Bucket=os.environ["BUCKET_NAME"],
-        Body=file,
-        Key=file.filename,
-        ContentType=file.content_type
-    )
-    return jsonify({'result': 'success'})
-
 if __name__ == '__main__':
     application.debug = True
     application.run()
