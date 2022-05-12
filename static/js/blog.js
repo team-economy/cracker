@@ -12,7 +12,6 @@ function get_blog() {
         data: {},
         success: function (response) {
             let blogs = response["blog_list"]
-            let blog = blogs[i]
             console.log(blogs)
             const next = document.querySelector(".next")
             next.addEventListener("click", function () {
@@ -21,12 +20,21 @@ function get_blog() {
                 temp_html(blogs)
                 console.log("clicked", i)
             }
+            const previous = document.querySelector(".previous")
+            previous.addEventListener("click", function () {
+            {
+                $('#blog-box').empty();
+                prev_html(blogs)
+                console.log("clicked", i)
+            }
         })
+    })
     }
     })
 }
 function temp_html(blogs) {
-    i++
+    ++i
+    if (i > 9) {i = i %9}
     let html_temp = `<div class="card" style="width: 18rem;">
                       <img src="${blogs[i]['img']}" class="card-img-top" alt="...">
                       <div class="card-body">
@@ -35,6 +43,16 @@ function temp_html(blogs) {
     $('#blog-box').append(html_temp)
 }
 
+function prev_html(blogs) {
+    i--
+    if (i <= 0) {i = 0}
+    let html_temp = `<div class="card" style="width: 18rem;">
+                      <img src="${blogs[i]['img']}" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <a href="${blogs[i]['link']}" target="_blank" id="place_name">&nbsp&nbsp&nbsp&nbsp<b>${blogs[i]['title']}                                  </div>
+                    </div>`
+    $('#blog-box').append(html_temp)
+}
 
 function get_blog_middle() {
     $('#blog-box-middle').empty();
