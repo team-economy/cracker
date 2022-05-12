@@ -19,6 +19,7 @@ SECRET_KEY = 'Cracker'
 
 bp = Blueprint('blog', __name__)
 
+
 ##Left column of Blog links##
 @bp.route('/blog', methods=["GET"])
 def get_blog():
@@ -30,22 +31,26 @@ def get_blog():
     soup = BeautifulSoup(data.text, 'html.parser')
 
     trs = soup.select(
-        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[0:5]
+        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[0:10]
     blog_list = []
 
     for tr in trs:
         a_tag = tr.select_one('div.total_wrap.api_ani_send > div > a')
-        if a_tag is not None:
+        img_tag = tr.select_one('div.total_wrap.api_ani_send > a > span').img
+
+        if img_tag is not None:
             title = a_tag.text
             link = a_tag.get("href")
+            img = img_tag.get("src")
 
-            doc = {
-                'title': title,
-                'link': link
-            }
-            blog_list.append(doc)
-
+        doc = {
+            'title': title,
+            'link': link,
+            'img': img
+        }
+        blog_list.append(doc)
     return jsonify({'result': 'success', 'blog_list': blog_list})
+
 
 ##Middle column of Blog links##
 @bp.route('/blogmiddle', methods=["GET"])
@@ -58,19 +63,25 @@ def get_blog_middle():
     soup = BeautifulSoup(data.text, 'html.parser')
 
     trs = soup.select(
-        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[6:11]
+        '#main_pack > section > div > div._list > panel-list > div:nth-child(1) > more-contents > div > ul > li')[10:14]
 
     blog_list_middle = []
 
     for tr in trs:
         a_tag = tr.select_one('div.total_wrap.api_ani_send > div > a')
-        if a_tag is not None:
-            title = a_tag.text[0:35]
-            link = a_tag.get("href")
+        img_tag = tr.select_one('div.total_wrap.api_ani_send > a > span').img
 
-            docmiddle = {
-                'title': title,
-                'link': link
-            }
-            blog_list_middle.append(docmiddle)
+        if a_tag is not None:
+            title = a_tag.text
+            link = a_tag.get("href")
+        if img_tag is not None:
+            img = img_tag.get("src")
+
+        docmiddle = {
+            'title': title,
+            'link': link,
+            'img': img
+        }
+        blog_list_middle.append(docmiddle)
+
     return jsonify({'result': 'success', 'blog_list_middle': blog_list_middle})
