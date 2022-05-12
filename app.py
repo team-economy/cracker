@@ -64,25 +64,14 @@ def get_posts():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         my_user_name = payload["id"]
-        # user_name_receive = request.args.get("user_name_give")
-            #date 내림차순 (최근것부터).20개 한정
-        # if user_name_receive == "":
-        #     posts = list(db.posts.find({}).sort("date", -1).limit(20))
-        # else:
-        #     posts = list(db.posts.find({"user_name": user_name_receive}).sort("date", -1).limit(20))
-        posts = list(db.posts.find({},{'_id': False}).sort("date", -1))
-        print(posts)
+        user_name_receive = request.args.get("user_name_give")
+            # date 내림차순 (최근것부터).20개 한정
+        posts = list(db.posts.find({}).sort("date", -1).limit(20))
             #좋아요 고유식별자
-        # for post in posts:
-        #     post["_id"] = str(post["_id"])
-        #
-        #     post["count_like"] = db.likes.count_documents({"post_id": post["_id"], "type": "like"})
-        #     post["like_by_me"] = bool(
-        #         db.likes.find_one({"post_id": post["_id"], "type": "like", "user_name": my_user_name}))
-        #
-        #     post["count_unlike"] = db.likes.count_documents({"post_id": post["_id"], "type": "unlike"})
-        #     post["unlike_by_me"] = bool(
-        #         db.likes.find_one({"post_id": post["_id"], "type": "unlike", "user_name": my_user_name}))
+        for post in posts:
+            post["_id"] = str(post["_id"])
+            post["count_heart"] = db.likes.count_documents({"post_id": post["_id"], "type": "heart"})
+            post["heart_by_me"] = bool(db.likes.find_one({"post_id": post["_id"], "type": "heart", "username": my_user_name}))
 
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
