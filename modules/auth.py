@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
-
 db = client.cracker
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
