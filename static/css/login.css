@@ -1,0 +1,19 @@
+.button {
+    background-color: #DAB88B;
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.button.is-craker.is-outlined {
+    background-color: #B7CADB;
+    border-color: black;
+    color: black !important;
+}
+
+.help {
+    color: gray;
+}
+
+* {
+    font-family: 'Gowun Batang', serif;
+}

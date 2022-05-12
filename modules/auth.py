@@ -64,14 +64,22 @@ def sign_up():
         "user_pw": password_hash,                                  # 비밀번호
         "user_pic": "",                                          # 프로필 사진 파일 이름
         "user_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
-        "user_info": ""                                          # 프로필 한 마디
+        "user_info": "" ,                                         # 프로필 한 마디
+        "marker_pic":"",
+        "marker_pic_real": "marker_pics/marker-default.png"
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
 
 
-@bp.route('/sign_up/check_dup', methods=['POST'])
-def check_dup():
+@bp.route('/sign_up/check_email_dup', methods=['POST'])
+def check_email_dup():
     user_mail_receive = request.form['user_mail_give']
     exists = bool(db.users.find_one({"user_mail": user_mail_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
+
+@bp.route('/sign_up/check_user_dup', methods=['POST'])
+def check_user_dup():
+    user_name_receive = request.form['user_name_give']
+    exists = bool(db.users.find_one({"user_name": user_name_receive}))
     return jsonify({'result': 'success', 'exists': exists})

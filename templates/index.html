@@ -22,14 +22,15 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Raleway&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Source+Code+Pro:ital,wght@0,300;1,300&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
     <!-- Import CSS -->
     <link href="{{ url_for('static', filename='css/logo.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/map_place.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/index_user_info.css') }}" rel="stylesheet">
-
+    <link href="{{ url_for('static', filename='css/blog_footer.css') }}" rel="stylesheet">
     <!-- Naver Map -->
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gpyucdzjhf&submodules=geocoder"></script>
@@ -49,13 +50,16 @@
 <body>
 <div class="user-info">
     <p>
-        <span class="user-name"><a>{{ user_info.user_name }}</a>님 안녕하세요? &nbsp&nbsp</span>
-        <button class="button is-dark is-rounded" onclick="sign_out()">Crack OUT</button>
+        <span class="user-name"><a id="user_name" href="/user/{{ user_info.user_mail }}">{{ user_info.user_name }}</a>님 안녕하세요? &nbsp&nbsp</span>
+        <button class="button"
+                style="font-family: 'Source Code Pro', monospace; font-weight: bolder; background-color: #E3B7A0"
+                onclick="sign_out()">Crack OUT
+        </button>
     </p>
 </div>
-<section class="hero is-white">
+<section class="hero" style="background-color: #FDF6EC">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
-        <h1 class="title">CRACKER</h1>
+        <h1 class="title" style="font-style: italic">CRACKER</h1>
         <h3 class="subtitle">Share crumbs of every moment</h3>
     </div>
 </section>
@@ -89,14 +93,18 @@
                 onclick='$("#modal-post").removeClass("is-active")'></button>
     </div>
 </section>
-<section class="map-section">
+<section class="index map-section">
     <div id="map"></div>
-    <div class="map-placelist">
+    <div class="index map-placelist">
         <div class="media-content">
             <div class="field">
                 <p class="control">
-                    <input id="input-post" class="input is-rounded place-input" placeholder="맛집 이름을 입력하세요">
-                    <button type="button" class="btn btn-primary find-btn" onclick='get_address();'>찾기
+                    <input id="input-post" class="input place-input"
+                           style="background-color: #FBF8F1; font-family: 'Gowun Batang', serif"
+                           placeholder="맛집 이름을 입력하세요">
+                    <button type="button" class="btn btn-primary find-btn"
+                            style="background-color: #DAB88B; border-color: #DAB88B; font-family: 'Gowun Batang', serif"
+                            onclick='get_address();'>찾기
                     </button>
                 </p>
             </div>
@@ -112,10 +120,12 @@
     </div>
 </section>
 <div class="row">
-    <h1 class="blog-title">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTrace of Crumbs</h1>
+    <h1 class="blog-title" style="font-weight: bold">&nbsp&nbsp&nbsp......Trace of Crumbs......</h1>
     <div class="blog-list column" id="blog-box"></div>
     <div class="blog-middle column" id="blog-box-middle"></div>
 </div>
-    <div class="footer">Copyright © 2022 Cracker. All rights reserved.</div>
+<footer class="footer">
+    Copyright © 2022 Cracker. All rights reserved.
+</footer>
 </body>
 </html>

@@ -47,9 +47,14 @@ def save_place():
         addr_road_receive = request.form["addr_road_give"]
         x_receive = request.form["x_give"]
         y_receive = request.form["y_give"]
+
         phone_receive = request.form["phone_give"]
+        category_receive = request.form["category_give"]
 
         saved_place = db.matjip.find_one({'matjip_address': addr_receive})
+
+        marker_pic_real = user_info["marker_pic_real"]
+        marker_pic = user_info["marker_pic"]
 
         if (saved_place is None):
             doc = {
@@ -60,7 +65,10 @@ def save_place():
                 "user_name": user_info["user_name"],
                 "x": x_receive,
                 "y": y_receive,
-                "phone": phone_receive
+                "phone": phone_receive,
+                "category":category_receive,
+                "marker_pic": marker_pic,
+                "marker_pic_real":marker_pic_real
             }
             db.matjip.insert_one(doc)
             return ({"result": "success", "msg": "저장 완료!!"})
@@ -80,8 +88,7 @@ def delete_place():
         addr_receive = request.form['addr_give']
 
         saved_place = db.matjip.find_one({'matjip_address': addr_receive})
-        if (user_info["user_mail"] == saved_place["user_mail"] and user_info["user_name"] == saved_place[
-            "user_name"]):
+        if (user_info["user_mail"] == saved_place["user_mail"]):
             db.matjip.delete_one({'matjip_address': addr_receive})
             return jsonify({'result': 'success', 'msg': '삭제 완료!!'})
         else:

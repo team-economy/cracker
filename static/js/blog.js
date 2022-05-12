@@ -14,7 +14,7 @@ function get_blog() {
             console.log(blogs)
             for (let i = 0; i < blogs.length; i++) {
                 let blog = blogs[i]
-                let html_temp = `<div>
+                let html_temp = `<div><img src="static/cookie.png" width="50" height="50">
                                    <a href="${blog['link']}" target="_blank" id="place_name">&nbsp&nbsp&nbsp&nbsp<b>${blog['title']}</b></a>
                                        <p> </p>
                                        </label>
@@ -37,8 +37,8 @@ function get_blog_middle() {
             for (let i = 0; i < blogsmiddle.length; i++) {
                 let blogmiddle = blogsmiddle[i]
                 let temp_html = `<div>
+                                    <div><img src="static/cookie.png" width="50" height="50">
                                     <a href="${blogmiddle['link']}" target="_blank" id="place_name">&nbsp&nbsp&nbsp&nbsp<b>${blogmiddle['title']}</b></a>
-                                       <p>&nbsp;</p>
                                        </label>
                                 </div>`
                 $("#blog-box-middle").append(temp_html);

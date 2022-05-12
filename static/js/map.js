@@ -30,17 +30,20 @@ function get_place() {
             for (let i = 0; i < matjips.length; i++) {
                 let matjip = matjips[i]
                 make_card(i, matjip)
-                let marker = make_marker(matjip)
+                let marker = make_marker(matjip, matjip["marker_pic_real"])
                 add_info(i, marker, matjip)
             }
         }
     });
 }
 
-function make_marker(matjip) {
+function make_marker(matjip, user_marker) {
+    var HOME_PATH = window.HOME_PATH || '.';
+    let marker_icon = user_marker
     let marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(matjip["y"], matjip["x"]),
-        map: map
+        map: map,
+        icon: HOME_PATH+'/static/'+marker_icon
     });
     markers.push(marker);
     return marker
@@ -49,13 +52,13 @@ function make_marker(matjip) {
 function make_card(i, matjip) {
     let place_addr = matjip["matjip_address"]
     let html_temp = `<div class="card" id="card-${i}">
-                                <div class="card-body">
+                                <div class="card-body" style="background-color: #FDF6EC">
                                     <h5 class="card-title"><a href="javascript:click2center(${i})" class="matjip-title">${matjip['matjip_name']}</a></h5>
                                     <p class="card-text">지번 주소 : ${matjip['matjip_address']}</p>
                                     <p class="card-text">도로명 주소 : ${matjip['matjip_road_address']}</p>
                                     <p class="community-delete">
-                                    <button class="button is-success">커뮤니티
-                                    </button>&nbsp&nbsp&nbsp<button class="button is-danger" onclick="delete_place('${place_addr}')">삭제</button>
+                                    <button class="button is-success" style="background-color: #A0BCC2; font-family: 'Gowun Batang', serif" onclick="location.href='/community/${matjip['matjip_name']}'">커뮤니티
+                                    </button>&nbsp&nbsp&nbsp<button class="button is-danger" style="background-color: #ECA6A6; font-family: 'Gowun Batang', serif"" onclick="delete_place('${place_addr}')">삭제</button>
                                     </p>
                                 </div>
                             </div>`

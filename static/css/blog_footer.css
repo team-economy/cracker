@@ -1,5 +1,14 @@
+* {
+    font-family: 'Gowun Batang', serif;
+}
+
+.blog-title {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 30px;
+}
+
 body {
-    background-color: #C69B7B;
+    background-color: #F3E9DD;
     min-height: 100vh;
 }
 
@@ -20,10 +29,11 @@ body {
             left: 30%;
         }
 
+        .blog-list {
+            margin-left: 170px;
+        }
+
 .footer {
+    background-color: #FDF6EC;
     float: right;
-}
-
-.blog-title {
-
 }

@@ -1,19 +1,29 @@
 h5 {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 /* map and place list */
 
-.map-section {
+.index.map-section {
     width: 100%;
     height: 600px;
     max-width: 1500px;
-    margin: 80px auto 20px auto;
-    background-color: #C69B7B;
+    margin: 80px auto 0px auto;
+    background-color: #F3E9DD;
 }
+
+.user.map-section {
+    width: 100%;
+    height: 600px;
+    max-width: 1500px;
+    margin: 80px auto 0px auto;
+    background-color: #F3E9DD;
+}
+
 body {
-    background-color: #C69B7B;;
+    background-color: #F3E9DD;;
 }
+
 #map {
     float: left;
     width: 60%;
@@ -21,7 +31,7 @@ body {
 
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: #C69B7B;
+    background-color: #F3E9DD;
 
     z-index: 0;
 }
@@ -35,15 +45,29 @@ body {
     margin-left: 10px;
 }
 
+.user.place-input {
+    width: 85%;
+    margin-left: 20px;
+}
+
 .find-btn {
     margin-left: 10px;
 }
 
-.map-placelist {
+.user.find-btn {
+    margin-left: 20px;
+}
+
+.index.map-placelist {
     float: left;
     width: 35%;
 
     margin-left: 50px;
+}
+
+.user.map-placelist {
+    width: 50%;
+    margin: auto;
 }
 
 .matjip-list {
@@ -71,13 +95,13 @@ body {
 .button.save-button {
     background-color: #3A3845;
     border-color: transparent;
-    color: #fff !important;
+    color: #FDF6EC !important;
 }
 
 .button.cancel-button {
-    background-color: transparent;
-    border-color: #3A3845;
-    color: #e8344e !important;
+    background-color: #FDF6EC;
+    border-color: #FDF6EC;
+    color: #3A3845 !important;
 }
 
 .iw-inner {
@@ -86,9 +110,9 @@ body {
 }
 
 .place-phone {
-    color: blue;
+    color: #3A3845;
 }
 
-.community-delete{
+.community-delete {
     text-align: right;
 }
