@@ -14,10 +14,10 @@ function get_blog() {
             console.log(blogs)
             for (let i = 0; i < blogs.length; i++) {
                 let blog = blogs[i]
-                let html_temp = `<div><img src="static/cookie.png" width="50" height="50">
-                                   <a href="${blog['link']}" target="_blank" id="place_name">&nbsp&nbsp&nbsp&nbsp<b>${blog['title']}</b></a>
-                                       <p> </p>
-                                       </label>
+                let html_temp = `<div class="card" style="width: 18rem;">
+                                  <img src="${blog['img']}" class="card-img-top" alt="...">
+                                  <div class="card-body">
+                                    <a href="${blog['link']}" target="_blank" id="place_name">&nbsp&nbsp&nbsp&nbsp<b>${blog['title']}                                  </div>
                                 </div>`
                 $("#blog-box").append(html_temp);
             }
