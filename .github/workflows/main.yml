@@ -27,4 +27,4 @@ jobs:
             git reset --hard
             git fetch
             git pull
-            python app.py
+            nohup python app.py &
