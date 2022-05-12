@@ -60,7 +60,27 @@ def get_posts():
 
         matjip_name_receive = request.args.get("matjip_name_give")
 
-        posts = list(db.posts.find({"matjip_name": matjip_name_receive}, {'_id': False}))
+        posts = list(db.posts.find({"matjip_name": matjip_name_receive}, {'_id': False}).sort("date", -1).limit(20))
         return jsonify({'result': 'success', 'posts': posts})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+@bp.route("/delete", methods=['DELETE'])
+def delete_comment():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        # user 정보
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"user_mail": payload["id"]})
+
+        user_mail_receive = request.form['user_mail_give']
+        user_name_receive = request.form['user_name_give']
+        date_receive = request.form['date_give']
+
+        if (user_info["user_mail"] == user_mail_receive):
+            db.posts.delete_one({'user_mail':user_mail_receive,'user_name':user_name_receive, 'date':date_receive})
+            return jsonify({'result': 'success', 'msg': '삭제 완료!!'})
+        else:
+            return jsonify({'result': 'success', 'msg': '계정 정보를 확인하세요.'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))

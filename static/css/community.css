@@ -35,3 +35,8 @@
     height : 90px;
     width : 90px;
 }
+
+.delete-comment{
+    float:right;
+    color:red; !important;
+}

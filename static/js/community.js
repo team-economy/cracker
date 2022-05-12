@@ -42,12 +42,13 @@ function get_posts() {
                                             <a class="image is-64x64" href="/user/${post['user_mail']}">
                                                 <img class="is-rounded" src="/static/${post['user_pic_real']}"
                                                          alt="Image">
-                                            </a>
-                                        </div>
+                                            </a>                                        
+                                        </div>                                      
                                         <div class="media-content">
                                             <div class="content">
                                                 <p>
                                                     <strong>${post['user_name']}</strong> <small>${time_before}</small>
+                                                    <a type="button" class="delete-comment" onclick="delete_comment('${post['user_mail']}','${post['user_name']}','${post['date']}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                     <br>
                                                     ${post['comment']}                                                  
                                                 </p>
@@ -80,4 +81,26 @@ function time2str(date) {
         return parseInt(time) + "일 전"
     }
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
+}
+
+function delete_comment(user_mail, user_name, date){
+    $.ajax({
+        type: "DELETE",
+        url: `/community/delete`,
+        data: {
+            user_mail_give:user_mail,
+            user_name_give:user_name,
+            date_give:date
+        },
+        success: function (response) {
+            if (response["msg"] == "삭제 완료!!") {
+                alert(response["msg"])
+                window.location.reload()
+            } else {
+                alert(response["msg"])
+            }
+        }
+
+    })
+
 }

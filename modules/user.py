@@ -49,6 +49,7 @@ def save_img():
             new_doc["user_pic"] = filename
             new_doc["user_pic_real"] = file_path
         db.users.update_one({'user_mail': payload['id']}, {'$set':new_doc})
+        db.posts.update_many({'user_mail': payload['id']}, {'$set':new_doc})
         return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
@@ -74,7 +75,6 @@ def save_marker():
             new_doc["marker_pic_real"] = marker_path
         db.users.update_one({'user_mail': payload['id']}, {'$set': new_doc})
         db.matjip.update_one({'user_mail': payload['id']}, {'$set': new_doc})
-        db.comment.update_many({'user_mail': payload['id']}, {'$set': new_doc})
         return jsonify({"result": "success", 'msg': '마커 이미지를 업데이트했습니다.'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
