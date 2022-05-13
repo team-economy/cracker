@@ -1,6 +1,6 @@
 from flask import Flask
 
-from modules import auth, place, map, blog, user, community
+from controllers import auth, place, map, blog, user, community
 
 app = Flask(__name__)
 
